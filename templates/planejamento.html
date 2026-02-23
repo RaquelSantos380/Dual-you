@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header-planejamento">
+    <h1>📅 Planejamento Semanal</h1>
+    <p>Adicione tarefas para a semana. Depois use o 🎲 para sortear as tarefas diárias!</p>
+</div>
+
+<!-- Dias da semana -->
+<div class="dias-semana">
+    <div class="dia-card" onclick="mostrarFormDia('Segunda-feira')">
+        <h3>Segunda</h3>
+    </div>
+    <div class="dia-card" onclick="mostrarFormDia('Terça-feira')">
+        <h3>Terça</h3>
+    </div>
+    <div class="dia-card" onclick="mostrarFormDia('Quarta-feira')">
+        <h3>Quarta</h3>
+    </div>
+    <div class="dia-card" onclick="mostrarFormDia('Quinta-feira')">
+        <h3>Quinta</h3>
+    </div>
+    <div class="dia-card" onclick="mostrarFormDia('Sexta-feira')">
+        <h3>Sexta</h3>
+    </div>
+    <div class="dia-card" onclick="mostrarFormDia('Sábado')">
+        <h3>Sábado</h3>
+    </div>
+    <div class="dia-card" onclick="mostrarFormDia('Domingo')">
+        <h3>Domingo</h3>
+    </div>
+</div>
+
+<!-- Formulário para adicionar tarefa (inicialmente escondido) -->
+<div id="form-tarefa-dia" class="form-tarefa-dia" style="display: none;">
+    <h3>Adicionar Tarefa para <span id="dia-selecionado"></span></h3>
+    <form action="{{ url_for('adicionar_tarefa_semana') }}" method="post">
+        <input type="hidden" name="dia_semana" id="dia-input">
+        <input type="text" name="descricao" placeholder="Digite a tarefa..." required>
+        <button type="submit" class="btn-confirmar">Adicionar</button>
+        <button type="button" class="btn-cancelar" onclick="esconderFormDia()">Cancelar</button>
+    </form>
+</div>
+
+<!-- Lista de tarefas da semana -->
+<div class="tarefas-semana">
+    <h2>Tarefas da Semana</h2>
+    
+    {% set dias = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'] %}
+    
+    {% for dia in dias %}
+        <div class="dia-tarefas">
+            <h3>{{ dia }}</h3>
+            <div class="tarefas-lista">
+                {% for tarefa in tarefas if tarefa.dia_semana == dia %}
+                    <div class="tarefa-item-planejamento">
+                        <span>{{ tarefa.descricao }}</span>
+                    </div>
+                {% else %}
+                    <p class="sem-tarefas">Nenhuma tarefa ainda</p>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Botão reset (com confirmação) -->
+<div class="acoes">
+    <form action="{{ url_for('resetar_semana') }}" method="post" class="form-reset">
+        <button type="submit" class="btn-reset" onclick="return confirm('Tem certeza? Isso vai apagar TODAS as tarefas!')">
+            🔄 Resetar Semana
+        </button>
+    </form>
+</div>
+
+<script>
+function mostrarFormDia(dia) {
+    document.getElementById('dia-selecionado').textContent = dia;
+    document.getElementById('dia-input').value = dia;
+    document.getElementById('form-tarefa-dia').style.display = 'block';
+}
+
+function esconderFormDia() {
+    document.getElementById('form-tarefa-dia').style.display = 'none';
+}
+</script>
+{% endblock %}

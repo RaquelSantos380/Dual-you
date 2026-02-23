@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header-batalha">
+    <h1>⚔️ A Batalha Diária - {{ dia }}</h1>
+</div>
+
+<!-- Placar -->
+<div class="placar">
+    <div class="jogador robo">
+        <div class="jogador-icon">👥</div>
+        <div class="jogador-info">
+            <h3>Alter Ego</h3>
+            <div class="pontos">{{ pontos_robo }} pts</div>
+        </div>
+    </div>
+    
+    <div class="versus">VS</div>
+    
+    <div class="jogador humano">
+        <div class="jogador-icon">👤</div>
+        <div class="jogador-info">
+            <h3>Você</h3>
+            <div class="pontos">{{ pontos_usuario }} pts</div>
+        </div>
+    </div>
+</div>
+
+<!-- Mensagem de diferença -->
+<div class="diferenca {% if diferenca >= 0 %}positiva{% else %}negativa{% endif %}">
+    {% if diferenca > 0 %}
+        🎉 Você está {{ diferenca }} pontos na frente! Mandou bem!
+    {% elif diferenca < 0 %}
+        ⚔️ Você está {{ -diferenca }} pontos atrás. Vamos lá!
+    {% else %}
+        🤝 Empate técnico! Hora de virar o jogo!
+    {% endif %}
+</div>
+
+<!-- Tarefas do dia -->
+<div class="tarefas-container">
+    <h2>Tarefas de Hoje</h2>
+    
+    <div class="colunas-tarefas">
+        <!-- Coluna do Robô -->
+        <div class="coluna robo-coluna">
+            <h3>👥 Alter Ego</h3>
+            <div class="tarefas-lista">
+                {% for tarefa in tarefas %}
+                    {% if not tarefa.extra %}
+                        <div class="tarefa-item concluida">
+                            <span class="check">✅</span>
+                            <span class="descricao">{{ tarefa.descricao }}</span>
+                            <span class="pontos-tarefa">+15 pts</span>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- Coluna do Humano -->
+        <div class="coluna humano-coluna">
+            <h3>👤 Suas Tarefas</h3>
+            <div class="tarefas-lista">
+                {% for tarefa in tarefas %}
+                    <div class="tarefa-item {% if tarefa.concluida_usuario %}concluida{% endif %}">
+                        {% if tarefa.concluida_usuario %}
+                            <span class="check">✅</span>
+                        {% else %}
+                            <form action="{{ url_for('concluir_tarefa', tarefa_id=tarefa.id) }}" method="post" class="tarefa-form">
+                                <button type="submit" class="check-btn" {% if tarefa.concluida_usuario %}disabled{% endif %}>
+                                    ⬜
+                                </button>
+                            </form>
+                        {% endif %}
+                        <span class="descricao">{{ tarefa.descricao }}</span>
+                        <span class="pontos-tarefa">+15 pts</span>
+                        {% if tarefa.extra %}
+                            <span class="badge-extra">Extra</span>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Botão adicionar tarefa extra -->
+            <div class="tarefa-extra">
+                <button class="btn-extra" onclick="mostrarFormExtra()">+ Adicionar Tarefa Extra</button>
+                
+                <div id="form-extra" class="form-extra" style="display: none;">
+                    <form action="{{ url_for('adicionar_tarefa_extra') }}" method="post">
+                        <input type="text" name="descricao" placeholder="Digite sua tarefa extra..." required>
+                        <button type="submit" class="btn-confirmar">Adicionar</button>
+                        <button type="button" class="btn-cancelar" onclick="esconderFormExtra()">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Botão embaralhar -->
+    <div class="acoes">
+        <form action="{{ url_for('embaralhar_tarefas') }}" method="post" class="form-embaralhar">
+            <button type="submit" class="btn-embaralhar" onclick="return confirm('Embaralhar as tarefas de hoje?')">
+                🎲 Embaralhar Tarefas
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+function mostrarFormExtra() {
+    document.getElementById('form-extra').style.display = 'block';
+}
+
+function esconderFormExtra() {
+    document.getElementById('form-extra').style.display = 'none';
+}
+</script>
+{% endblock %}
