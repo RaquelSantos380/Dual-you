@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header-planejamento">
+    <h1>⚙️ Configurações</h1>
+    <p>Personalize seu desafio diário</p>
+</div>
+
+<div class="tarefas-container" style="max-width: 600px; margin: 0 auto;">
+    <form method="post" class="config-form">
+        <div style="margin-bottom: 30px;">
+            <h3>📊 Quantidade de Tarefas Diárias</h3>
+            <p style="color: #666; margin-bottom: 15px;">Escolha quantas tarefas você quer enfrentar por dia:</p>
+            
+            <div style="display: flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+                <label style="flex: 1; min-width: 80px;">
+                    <input type="radio" name="tarefas_por_dia" value="3" {% if tarefas_por_dia == '3' %}checked{% endif %}>
+                    <div style="text-align: center; padding: 15px; background: #f0f0f0; border-radius: 10px; margin-top: 5px;">
+                        <span style="font-size: 24px; font-weight: bold;">3</span><br>
+                        <span style="color: #666;">Leve</span>
+                    </div>
+                </label>
+                
+                <label style="flex: 1; min-width: 80px;">
+                    <input type="radio" name="tarefas_por_dia" value="5" {% if tarefas_por_dia == '5' %}checked{% endif %}>
+                    <div style="text-align: center; padding: 15px; background: #3498db; color: white; border-radius: 10px; margin-top: 5px;">
+                        <span style="font-size: 24px; font-weight: bold;">5</span><br>
+                        <span>Normal</span>
+                    </div>
+                </label>
+                
+                <label style="flex: 1; min-width: 80px;">
+                    <input type="radio" name="tarefas_por_dia" value="7" {% if tarefas_por_dia == '7' %}checked{% endif %}>
+                    <div style="text-align: center; padding: 15px; background: #e74c3c; color: white; border-radius: 10px; margin-top: 5px;">
+                        <span style="font-size: 24px; font-weight: bold;">7</span><br>
+                        <span>Intenso</span>
+                    </div>
+                </label>
+                
+                <label style="flex: 1; min-width: 80px;">
+                    <input type="radio" name="tarefas_por_dia" value="10" {% if tarefas_por_dia == '10' %}checked{% endif %}>
+                    <div style="text-align: center; padding: 15px; background: #2c3e50; color: white; border-radius: 10px; margin-top: 5px;">
+                        <span style="font-size: 24px; font-weight: bold;">10</span><br>
+                        <span>Desafio</span>
+                    </div>
+                </label>
+                
+                <label style="flex: 1; min-width: 80px;">
+                    <input type="radio" name="tarefas_por_dia" value="99" {% if tarefas_por_dia == '99' %}checked{% endif %}>
+                    <div style="text-align: center; padding: 15px; background: #8e44ad; color: white; border-radius: 10px; margin-top: 5px;">
+                        <span style="font-size: 24px; font-weight: bold;">∞</span><br>
+                        <span>Todas</span>
+                    </div>
+                </label>
+            </div>
+            
+            <div style="margin-top: 20px;">
+                <label>
+                    <input type="radio" name="tarefas_por_dia" value="custom" {% if tarefas_por_dia not in ['3','5','7','10','99'] %}checked{% endif %}>
+                    Personalizado:
+                </label>
+                <input type="number" name="tarefas_custom" value="{% if tarefas_por_dia not in ['3','5','7','10','99'] %}{{ tarefas_por_dia }}{% else %}4{% endif %}" 
+                       min="1" max="50" style="width: 80px; margin-left: 10px; padding: 5px;">
+            </div>
+        </div>
+        
+        <div style="text-align: center;">
+            <button type="submit" class="btn-confirmar" style="padding: 15px 30px; font-size: 1.1rem;">
+                💾 Salvar Configurações
+            </button>
+        </div>
+    </form>
+</div>
+
+<style>
+.config-form input[type="radio"] {
+    display: none;
+}
+
+.config-form input[type="radio"]:checked + div {
+    border: 3px solid #f1c40f;
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+</style>
+{% endblock %}

@@ -22,6 +22,13 @@ def get_pontuacao_atual():
         
         return pontos_robo, pontos_usuario
 
+def get_config(chave, valor_padrao):
+    """Pega uma configuração do banco de dados"""
+    config = Config.query.filter_by(chave=chave).first()
+    if config:
+        return config.valor
+    return valor_padrao
+
 @app.route('/')
 def index():
     hoje = date.today()
@@ -44,7 +51,9 @@ def index():
     if not tarefas_hoje:
         tarefas_semana = Tarefa.query.filter_by(data=None).all()
         if tarefas_semana:
-            num_tarefas = random.randint(4, min(7, len(tarefas_semana)))
+            # Pega a configuração de quantidade de tarefas
+            qtd_tarefas = int(get_config('tarefas_por_dia', '7'))
+            num_tarefas = min(qtd_tarefas, len(tarefas_semana))
             tarefas_sorteadas = random.sample(tarefas_semana, num_tarefas)
             for tarefa in tarefas_sorteadas:
                 nova_tarefa_dia = Tarefa(
@@ -123,7 +132,9 @@ def embaralhar_tarefas():
     
     tarefas_semana = Tarefa.query.filter_by(data=None).all()
     if tarefas_semana:
-        num_tarefas = random.randint(4, min(7, len(tarefas_semana)))
+        # Pega a configuração de quantidade de tarefas
+        qtd_tarefas = int(get_config('tarefas_por_dia', '7'))
+        num_tarefas = min(qtd_tarefas, len(tarefas_semana))
         tarefas_sorteadas = random.sample(tarefas_semana, num_tarefas)
         for tarefa in tarefas_sorteadas:
             nova_tarefa_dia = Tarefa(
@@ -143,6 +154,33 @@ def resetar_semana():
     Tarefa.query.delete()
     db.session.commit()
     return redirect(url_for('index'))
+
+@app.route('/configuracoes', methods=['GET', 'POST'])
+def configuracoes():
+    if request.method == 'POST':
+        # Pega o valor selecionado
+        tarefas_por_dia = request.form.get('tarefas_por_dia', '7')
+        
+        # Se for personalizado, pega o valor do campo custom
+        if tarefas_por_dia == 'custom':
+            tarefas_por_dia = request.form.get('tarefas_custom', '7')
+        
+        # Verifica se já existe a configuração
+        config = Config.query.filter_by(chave='tarefas_por_dia').first()
+        if config:
+            config.valor = tarefas_por_dia
+        else:
+            config = Config(chave='tarefas_por_dia', valor=tarefas_por_dia)
+            db.session.add(config)
+        
+        db.session.commit()
+        return redirect(url_for('configuracoes'))
+    
+    # Pega as configurações atuais
+    tarefas_por_dia = get_config('tarefas_por_dia', '7')
+    
+    return render_template('configuracoes.html', 
+                         tarefas_por_dia=tarefas_por_dia)
 
 if __name__ == '__main__':
     with app.app_context():
