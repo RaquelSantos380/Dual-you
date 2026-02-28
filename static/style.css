@@ -401,33 +401,245 @@ body {
     padding: 10px;
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-    .colunas-tarefas {
-        grid-template-columns: 1fr;
+/* ======================================== */
+/* AJUSTES PARA CELULAR (TELAS PEQUENAS) */
+/* ======================================== */
+
+@media only screen and (max-width: 600px) {
+    /* Navbar */
+    .nav-container {
+        flex-direction: column;
+        padding: 10px;
     }
     
+    .nav-menu {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+        margin-top: 10px;
+    }
+    
+    .nav-link {
+        font-size: 0.9rem;
+        padding: 5px 10px;
+    }
+    
+    .nav-brand {
+        font-size: 1.2rem;
+    }
+    
+    /* Container principal */
+    .container {
+        padding: 10px;
+    }
+    
+    /* Placar */
     .placar {
         flex-direction: column;
-        gap: 20px;
+        padding: 15px;
     }
     
     .jogador {
         width: 100%;
         justify-content: center;
+        text-align: center;
     }
     
     .jogador.robo {
         justify-content: center;
     }
     
+    .versus {
+        margin: 10px 0;
+    }
+    
+    .jogador-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+    
+    .pontos {
+        font-size: 1.5rem;
+    }
+    
+    /* Colunas de tarefas */
+    .colunas-tarefas {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    /* Tarefas */
+    .tarefa-item {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    
+    .check-btn {
+        font-size: 1.2rem;
+    }
+    
+    .pontos-tarefa {
+        font-size: 0.8rem;
+        padding: 2px 6px;
+    }
+    
+    /* Cabeçalhos */
+    .header-batalha h1, 
+    .header-planejamento h1 {
+        font-size: 1.5rem;
+    }
+    
+    /* Diferença */
+    .diferenca {
+        font-size: 1rem;
+        padding: 10px;
+    }
+    
+    /* Dias da semana (planejamento) */
     .dias-semana {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+    }
+    
+    .dia-card {
+        padding: 10px;
+    }
+    
+    .dia-card h3 {
+        font-size: 0.9rem;
+    }
+    
+    /* Diário e Gratidão */
+    .conquistas-grid,
+    .gratidao-grid,
+    .importantes-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .conquista-card,
+    .gratidao-card,
+    .importante-card {
+        margin-bottom: 15px;
+    }
+    
+    .conquista-foto,
+    .gratidao-foto,
+    .importante-foto {
+        height: 150px;
+    }
+    
+    /* Botões */
+    .btn-embaralhar,
+    .btn-reset,
+    .btn-adicionar,
+    .btn-primary {
+        width: 100%;
+        margin: 5px 0;
+        padding: 12px;
+        font-size: 1rem;
+    }
+    
+    /* Formulários */
+    .form-tarefa-dia,
+    .form-extra,
+    .registro-card,
+    .adicionar-card {
+        padding: 15px;
+        margin: 10px 0;
+    }
+    
+    input, select, textarea {
+        font-size: 1rem;
+        padding: 10px;
+        width: 100%;
+    }
+    
+    /* Centralizar texto */
+    body {
+        text-align: center;
+    }
+    
+    .tarefa-item {
+        text-align: left;
+    }
+    
+    /* Ajustes específicos para o que estava voando */
+    .nav-menu {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    
+    .nav-link {
+        margin: 2px;
+    }
+    
+    /* Garantir que o WebView no MIT App Inventor funcione */
+    html, body {
+        width: 100%;
+        overflow-x: hidden;
+    }
+    
+    img {
+        max-width: 100%;
+        height: auto;
     }
 }
 
-@media (max-width: 480px) {
+/* Ajustes para telas muito pequenas (menos de 400px) */
+@media only screen and (max-width: 400px) {
+    .nav-link {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+    }
+    
+    .jogador-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+    }
+    
+    .pontos {
+        font-size: 1.2rem;
+    }
+    
+    h1 {
+        font-size: 1.3rem;
+    }
+    
+    h2 {
+        font-size: 1.1rem;
+    }
+    
+    h3 {
+        font-size: 1rem;
+    }
+    
+    .tarefa-item {
+        flex-wrap: wrap;
+    }
+    
+    .descricao {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+/* Ajustes para tablets (telas médias) */
+@media only screen and (min-width: 601px) and (max-width: 768px) {
     .dias-semana {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .conquistas-grid,
+    .gratidao-grid,
+    .importantes-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+}
+
+/* Garantir que o conteúdo não ultrapasse os limites */
+* {
+    max-width: 100%;
 }
