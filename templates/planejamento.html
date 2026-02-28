@@ -3,7 +3,7 @@
 {% block content %}
 <div class="header-planejamento">
     <h1>📅 Planejamento Semanal</h1>
-    <p>Adicione tarefas para a semana. Depois use o 🎲 para sortear as tarefas diárias!</p>
+    <p>Adicione tarefas fixas para cada dia da semana</p>
 </div>
 
 <!-- Dias da semana -->
@@ -31,10 +31,10 @@
     </div>
 </div>
 
-<!-- Formulário para adicionar tarefa (inicialmente escondido) -->
+<!-- Formulário para adicionar tarefa -->
 <div id="form-tarefa-dia" class="form-tarefa-dia" style="display: none;">
     <h3>Adicionar Tarefa para <span id="dia-selecionado"></span></h3>
-    <form action="{{ url_for('adicionar_tarefa_semana') }}" method="post">
+    <form action="{{ url_for('adicionar_tarefa_fixa') }}" method="post">
         <input type="hidden" name="dia_semana" id="dia-input">
         <input type="text" name="descricao" placeholder="Digite a tarefa..." required>
         <button type="submit" class="btn-confirmar">Adicionar</button>
@@ -44,7 +44,7 @@
 
 <!-- Lista de tarefas da semana -->
 <div class="tarefas-semana">
-    <h2>Tarefas da Semana</h2>
+    <h2>Tarefas Fixas por Dia</h2>
     
     {% set dias = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'] %}
     
@@ -52,23 +52,51 @@
         <div class="dia-tarefas">
             <h3>{{ dia }}</h3>
             <div class="tarefas-lista">
-                {% for tarefa in tarefas if tarefa.dia_semana == dia %}
+                {% for tarefa in tarefas_por_dia[dia] %}
                     <div class="tarefa-item-planejamento">
                         <span>{{ tarefa.descricao }}</span>
                     </div>
                 {% else %}
-                    <p class="sem-tarefas">Nenhuma tarefa ainda</p>
+                    <p class="sem-tarefas">Nenhuma tarefa fixa</p>
                 {% endfor %}
             </div>
         </div>
     {% endfor %}
+    
+    <!-- Tarefas Extras -->
+    <div class="dia-tarefas" style="margin-top: 30px; background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);">
+        <h3>✨ Tarefas Extras</h3>
+        <div class="tarefas-lista">
+            {% for tarefa in tarefas_extra %}
+                <div class="tarefa-item-planejamento">
+                    <span>{{ tarefa.descricao }}</span>
+                    <span class="badge-extra">Extra</span>
+                </div>
+            {% else %}
+                <p class="sem-tarefas">Nenhuma tarefa extra</p>
+            {% endfor %}
+        </div>
+        
+        <!-- Botão adicionar tarefa extra -->
+        <div class="tarefa-extra">
+            <button class="btn-extra" onclick="mostrarFormExtra()">+ Adicionar Tarefa Extra</button>
+            
+            <div id="form-extra" class="form-extra" style="display: none;">
+                <form action="{{ url_for('adicionar_tarefa_extra') }}" method="post">
+                    <input type="text" name="descricao" placeholder="Digite sua tarefa extra..." required>
+                    <button type="submit" class="btn-confirmar">Adicionar</button>
+                    <button type="button" class="btn-cancelar" onclick="esconderFormExtra()">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- Botão reset (com confirmação) -->
+<!-- Botão reset -->
 <div class="acoes">
-    <form action="{{ url_for('resetar_semana') }}" method="post" class="form-reset">
+    <form action="{{ url_for('resetar_tarefas') }}" method="post" class="form-reset">
         <button type="submit" class="btn-reset" onclick="return confirm('Tem certeza? Isso vai apagar TODAS as tarefas!')">
-            🔄 Resetar Semana
+            🔄 Resetar Tudo
         </button>
     </form>
 </div>
@@ -82,6 +110,14 @@ function mostrarFormDia(dia) {
 
 function esconderFormDia() {
     document.getElementById('form-tarefa-dia').style.display = 'none';
+}
+
+function mostrarFormExtra() {
+    document.getElementById('form-extra').style.display = 'block';
+}
+
+function esconderFormExtra() {
+    document.getElementById('form-extra').style.display = 'none';
 }
 </script>
 {% endblock %}

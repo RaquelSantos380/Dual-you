@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="importantes-container">
+    <div class="importantes-header">
+        <h1>⭐ Coisas Importantes</h1>
+        <p>Momentos que me lembram que eu sou capaz</p>
+        <a href="/adicionar_momento?tipo=importante" class="btn-adicionar">+ Adicionar momento importante</a>
+    </div>
+    
+    <div class="importantes-grid">
+        {% for momento in momentos %}
+        <div class="importante-card">
+            {% if momento.foto %}
+            <div class="importante-foto">
+                <img src="{{ url_for('static', filename=momento.foto) }}" alt="{{ momento.titulo }}">
+            </div>
+            {% endif %}
+            
+            <div class="importante-conteudo">
+                <h3>{{ momento.titulo }}</h3>
+                <div class="importante-data">{{ momento.data.strftime('%d/%m/%Y') }}</div>
+                <p>{{ momento.descricao }}</p>
+            </div>
+        </div>
+        {% else %}
+        <div class="importante-empty">
+            <div class="empty-icon">⭐</div>
+            <h3>Nenhum momento importante registrado ainda</h3>
+            <p>Registre aqui momentos que provam o quanto você é capaz!</p>
+            <a href="/adicionar_momento?tipo=importante" class="btn-adicionar">Adicionar primeiro momento</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.importantes-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.importantes-header {
+    text-align: center;
+    margin-bottom: 40px;
+    color: white;
+}
+
+.importantes-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.btn-adicionar {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 30px;
+    background: white;
+    color: #e67e22;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.btn-adicionar:hover {
+    transform: scale(1.05);
+    background: #f0f0f0;
+}
+
+.importantes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.importante-card {
+    background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(230, 126, 34, 0.2);
+    transition: all 0.3s;
+    border: 1px solid rgba(230, 126, 34, 0.1);
+}
+
+.importante-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(230, 126, 34, 0.3);
+}
+
+.importante-foto {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.importante-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.importante-card:hover .importante-foto img {
+    transform: scale(1.1);
+}
+
+.importante-conteudo {
+    padding: 25px;
+    position: relative;
+}
+
+.importante-conteudo h3 {
+    color: #e67e22;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.importante-data {
+    font-size: 0.85rem;
+    color: #b45f06;
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.importante-conteudo p {
+    color: #5d3a1a;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.importante-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    background: rgba(255,245,230,0.9);
+    border-radius: 20px;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+</style>
+{% endblock %}

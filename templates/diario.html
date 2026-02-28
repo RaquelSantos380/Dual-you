@@ -1,0 +1,198 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="diario-container">
+    <div class="diario-header">
+        <h1>📖 Meu Diário de Conquistas</h1>
+        <p>Cada tarefa concluída é uma vitória. Registre aqui como você se sentiu!</p>
+    </div>
+    
+    <div class="conquistas-grid">
+        {% for conquista in conquistas %}
+        <div class="conquista-card" style="animation: fadeIn 0.5s ease;">
+            <div class="conquista-data">
+                {{ conquista.data.strftime('%d/%m/%Y') }}
+            </div>
+            
+            {% if conquista.foto %}
+            <div class="conquista-foto">
+                <img src="{{ url_for('static', filename=conquista.foto) }}" alt="Foto da conquista">
+            </div>
+            {% endif %}
+            
+            <div class="conquista-conteudo">
+                <h3>{{ conquista.tarefa.descricao }}</h3>
+                
+                <div class="conquista-sentimento">
+                    <span class="sentimento-label">Como me senti:</span>
+                    <p>{{ conquista.sentimento }}</p>
+                </div>
+                
+                {% if conquista.descricao %}
+                <div class="conquista-reflexao">
+                    <span class="reflexao-label">Minha reflexão:</span>
+                    <p>{{ conquista.descricao }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <div class="conquista-empty">
+            <div class="empty-icon">📝</div>
+            <h3>Nenhuma conquista registrada ainda</h3>
+            <p>Complete suas tarefas e registre como você se sentiu!</p>
+            <a href="/" class="btn-primary">Ver tarefas de hoje</a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+.diario-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.diario-header {
+    text-align: center;
+    margin-bottom: 40px;
+    color: white;
+}
+
+.diario-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.conquistas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+}
+
+.conquista-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.conquista-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+.conquista-data {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 10px 15px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.conquista-foto {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.conquista-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.conquista-card:hover .conquista-foto img {
+    transform: scale(1.05);
+}
+
+.conquista-conteudo {
+    padding: 20px;
+}
+
+.conquista-conteudo h3 {
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+.conquista-sentimento, .conquista-reflexao {
+    margin-bottom: 15px;
+}
+
+.sentimento-label, .reflexao-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.conquista-sentimento p {
+    color: #2ecc71;
+    font-weight: bold;
+    font-size: 1.1rem;
+    font-style: italic;
+}
+
+.conquista-reflexao p {
+    color: #555;
+    line-height: 1.6;
+}
+
+.conquista-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 20px;
+}
+
+.empty-icon {
+    font-size: 5rem;
+    margin-bottom: 20px;
+    opacity: 0.5;
+}
+
+.conquista-empty h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.conquista-empty p {
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 12px 30px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: transform 0.3s;
+}
+
+.btn-primary:hover {
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+{% endblock %}

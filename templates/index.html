@@ -47,13 +47,14 @@
             <h3>👥 Alter Ego</h3>
             <div class="tarefas-lista">
                 {% for tarefa in tarefas %}
-                    {% if not tarefa.extra %}
-                        <div class="tarefa-item concluida">
-                            <span class="check">✅</span>
-                            <span class="descricao">{{ tarefa.descricao }}</span>
-                            <span class="pontos-tarefa">+15 pts</span>
-                        </div>
-                    {% endif %}
+                    <div class="tarefa-item concluida">
+                        <span class="check">✅</span>
+                        <span class="descricao">{{ tarefa.tarefa.descricao }}</span>
+                        <span class="pontos-tarefa">+15 pts</span>
+                        {% if tarefa.tarefa.extra %}
+                            <span class="badge-extra">Extra</span>
+                        {% endif %}
+                    </div>
                 {% endfor %}
             </div>
         </div>
@@ -63,57 +64,25 @@
             <h3>👤 Suas Tarefas</h3>
             <div class="tarefas-lista">
                 {% for tarefa in tarefas %}
-                    <div class="tarefa-item {% if tarefa.concluida_usuario %}concluida{% endif %}">
-                        {% if tarefa.concluida_usuario %}
+                    <div class="tarefa-item {% if tarefa.concluida %}concluida{% endif %}">
+                        {% if tarefa.concluida %}
                             <span class="check">✅</span>
                         {% else %}
-                            <form action="{{ url_for('concluir_tarefa', tarefa_id=tarefa.id) }}" method="post" class="tarefa-form">
-                                <button type="submit" class="check-btn" {% if tarefa.concluida_usuario %}disabled{% endif %}>
+                            <form action="{{ url_for('concluir_tarefa', tarefa_dia_id=tarefa.id) }}" method="post" class="tarefa-form">
+                                <button type="submit" class="check-btn">
                                     ⬜
                                 </button>
                             </form>
                         {% endif %}
-                        <span class="descricao">{{ tarefa.descricao }}</span>
+                        <span class="descricao">{{ tarefa.tarefa.descricao }}</span>
                         <span class="pontos-tarefa">+15 pts</span>
-                        {% if tarefa.extra %}
+                        {% if tarefa.tarefa.extra %}
                             <span class="badge-extra">Extra</span>
                         {% endif %}
                     </div>
                 {% endfor %}
             </div>
-            
-            <!-- Botão adicionar tarefa extra -->
-            <div class="tarefa-extra">
-                <button class="btn-extra" onclick="mostrarFormExtra()">+ Adicionar Tarefa Extra</button>
-                
-                <div id="form-extra" class="form-extra" style="display: none;">
-                    <form action="{{ url_for('adicionar_tarefa_extra') }}" method="post">
-                        <input type="text" name="descricao" placeholder="Digite sua tarefa extra..." required>
-                        <button type="submit" class="btn-confirmar">Adicionar</button>
-                        <button type="button" class="btn-cancelar" onclick="esconderFormExtra()">Cancelar</button>
-                    </form>
-                </div>
-            </div>
         </div>
     </div>
-    
-    <!-- Botão embaralhar -->
-    <div class="acoes">
-        <form action="{{ url_for('embaralhar_tarefas') }}" method="post" class="form-embaralhar">
-            <button type="submit" class="btn-embaralhar" onclick="return confirm('Embaralhar as tarefas de hoje?')">
-                🎲 Embaralhar Tarefas
-            </button>
-        </form>
-    </div>
 </div>
-
-<script>
-function mostrarFormExtra() {
-    document.getElementById('form-extra').style.display = 'block';
-}
-
-function esconderFormExtra() {
-    document.getElementById('form-extra').style.display = 'none';
-}
-</script>
 {% endblock %}

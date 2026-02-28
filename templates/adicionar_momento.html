@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="adicionar-container">
+    <div class="adicionar-card">
+        <h1>✨ Adicionar Momento</h1>
+        
+        <form method="post" class="adicionar-form" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Tipo de momento</label>
+                <select name="tipo" required>
+                    <option value="gratidao" {% if request.args.get('tipo') == 'gratidao' %}selected{% endif %}>🙏 Gratidão</option>
+                    <option value="importante" {% if request.args.get('tipo') == 'importante' %}selected{% endif %}>⭐ Importante</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label>Título</label>
+                <input type="text" name="titulo" required placeholder="Dê um título especial a este momento">
+            </div>
+            
+            <div class="form-group">
+                <label>Descrição</label>
+                <textarea name="descricao" rows="4" required placeholder="O que aconteceu? Por que é especial?"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label>📸 Foto (opcional)</label>
+                <input type="file" name="foto" accept="image/*">
+                <small>Escolha uma foto do seu computador</small>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-salvar">💾 Salvar momento</button>
+                <a href="javascript:history.back()" class="btn-voltar">← Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+.adicionar-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.adicionar-card {
+    background: white;
+    border-radius: 30px;
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+}
+
+.adicionar-card h1 {
+    color: #333;
+    margin-bottom: 30px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.adicionar-form .form-group {
+    margin-bottom: 25px;
+}
+
+.adicionar-form label {
+    display: block;
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: bold;
+}
+
+.adicionar-form select,
+.adicionar-form textarea,
+.adicionar-form input[type="file"],
+.adicionar-form input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.adicionar-form select:focus,
+.adicionar-form textarea:focus,
+.adicionar-form input:focus {
+    outline: none;
+    border-color: #764ba2;
+}
+
+.adicionar-form small {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+    font-size: 0.85rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn-salvar {
+    flex: 2;
+    padding: 12px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.btn-salvar:hover {
+    transform: scale(1.02);
+}
+
+.btn-voltar {
+    flex: 1;
+    padding: 12px;
+    background: #f0f0f0;
+    color: #666;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 10px;
+    transition: background 0.3s;
+}
+
+.btn-voltar:hover {
+    background: #e0e0e0;
+}
+</style>
+{% endblock %}

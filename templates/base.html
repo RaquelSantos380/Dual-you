@@ -13,12 +13,26 @@
             <div class="nav-menu">
                 <a href="/" class="nav-link">Batalha Diária</a>
                 <a href="/planejamento" class="nav-link">Planejamento</a>
-                <a href="/configuracoes" class="nav-link">⚙️ Config.</a>
+                <a href="/diario" class="nav-link">📖 Diário</a>
+                <a href="/gratidao" class="nav-link">🙏 Gratidão</a>
+                <a href="/importantes" class="nav-link">⭐ Importantes</a>
+                <a href="/configuracoes" class="nav-link">⚙️</a>
             </div>
         </div>
     </nav>
     
     <main class="container">
+        <!-- Mensagens flash (para confirmações) -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}" style="background: #2ecc71; color: white; padding: 10px; border-radius: 5px; margin-bottom: 20px; text-align: center;">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
         {% block content %}{% endblock %}
     </main>
     
