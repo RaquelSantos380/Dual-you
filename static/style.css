@@ -2,17 +2,24 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    max-width: 100%;
 }
 
-body {
+html, body {
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    min-height: 100vh;
+    background-attachment: fixed;
     color: #333;
 }
 
-/* Navbar */
+/* ========== NAVBAR ========== */
 .navbar {
+    width: 100%;
     background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     padding: 1rem 0;
@@ -55,14 +62,18 @@ body {
     color: white;
 }
 
-/* Container principal */
+/* ========== CONTAINER PRINCIPAL ========== */
 .container {
+    width: 100%;
     max-width: 1200px;
     margin: 30px auto;
     padding: 0 20px;
+    min-height: calc(100vh - 100px);
+    display: flex;
+    flex-direction: column;
 }
 
-/* Header */
+/* ========== HEADERS ========== */
 .header-batalha, .header-planejamento {
     text-align: center;
     margin-bottom: 30px;
@@ -70,7 +81,7 @@ body {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
-/* Placar */
+/* ========== PLACAR ========== */
 .placar {
     display: flex;
     justify-content: space-between;
@@ -80,6 +91,7 @@ body {
     padding: 30px;
     margin-bottom: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    width: 100%;
 }
 
 .jogador {
@@ -139,7 +151,7 @@ body {
     padding: 0 20px;
 }
 
-/* Diferença */
+/* ========== DIFERENÇA ========== */
 .diferenca {
     background: white;
     border-radius: 10px;
@@ -148,6 +160,7 @@ body {
     font-size: 1.2rem;
     margin-bottom: 30px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    width: 100%;
 }
 
 .diferenca.positiva {
@@ -160,12 +173,14 @@ body {
     color: white;
 }
 
-/* Tarefas */
+/* ========== TAREFAS ========== */
 .tarefas-container {
     background: white;
     border-radius: 20px;
     padding: 30px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    width: 100%;
+    flex: 1;
 }
 
 .tarefas-container h2 {
@@ -236,6 +251,7 @@ body {
 
 .descricao {
     flex: 1;
+    word-break: break-word;
 }
 
 .pontos-tarefa {
@@ -245,6 +261,7 @@ body {
     padding: 4px 8px;
     border-radius: 15px;
     font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 .badge-extra {
@@ -253,9 +270,10 @@ body {
     padding: 2px 8px;
     border-radius: 12px;
     font-size: 0.8rem;
+    white-space: nowrap;
 }
 
-/* Tarefa extra */
+/* ========== TAREFA EXTRA ========== */
 .tarefa-extra {
     margin-top: 20px;
 }
@@ -292,7 +310,7 @@ body {
     margin-bottom: 10px;
 }
 
-/* Botões */
+/* ========== BOTÕES ========== */
 .btn-confirmar, .btn-cancelar {
     padding: 8px 16px;
     border: none;
@@ -346,7 +364,7 @@ body {
     background: #c0392b;
 }
 
-/* Planejamento */
+/* ========== PLANEJAMENTO ========== */
 .dias-semana {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -381,6 +399,7 @@ body {
     background: white;
     border-radius: 20px;
     padding: 30px;
+    width: 100%;
 }
 
 .dia-tarefas {
@@ -401,42 +420,132 @@ body {
     padding: 10px;
 }
 
-/* ======================================== */
-/* AJUSTES PARA CELULAR (TELAS PEQUENAS) */
-/* ======================================== */
+/* ========== DIÁRIO E GRATIDÃO ========== */
+.conquistas-grid,
+.gratidao-grid,
+.importantes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    width: 100%;
+}
 
-@media only screen and (max-width: 600px) {
-    /* Navbar */
-    .nav-container {
-        flex-direction: column;
-        padding: 10px;
-    }
-    
-    .nav-menu {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 5px;
-        margin-top: 10px;
-    }
-    
-    .nav-link {
-        font-size: 0.9rem;
-        padding: 5px 10px;
-    }
-    
-    .nav-brand {
-        font-size: 1.2rem;
-    }
-    
-    /* Container principal */
+.conquista-card,
+.gratidao-card,
+.importante-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+    height: fit-content;
+}
+
+.conquista-card:hover,
+.gratidao-card:hover,
+.importante-card:hover {
+    transform: translateY(-5px);
+}
+
+.conquista-foto,
+.gratidao-foto,
+.importante-foto {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.conquista-foto img,
+.gratidao-foto img,
+.importante-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.conquista-card:hover .conquista-foto img,
+.gratidao-card:hover .gratidao-foto img,
+.importante-card:hover .importante-foto img {
+    transform: scale(1.05);
+}
+
+/* ========== FORMULÁRIOS ========== */
+.registro-container,
+.adicionar-container {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.registro-card,
+.adicionar-card {
+    background: white;
+    border-radius: 30px;
+    padding: 40px;
+    max-width: 600px;
+    width: 100%;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+}
+
+.registro-card h1,
+.adicionar-card h1 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: bold;
+}
+
+.form-group select,
+.form-group textarea,
+.form-group input[type="text"],
+.form-group input[type="url"],
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group select:focus,
+.form-group textarea:focus,
+.form-group input:focus {
+    outline: none;
+    border-color: #764ba2;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+    font-size: 0.85rem;
+}
+
+/* ========== RESPONSIVIDADE MOBILE ========== */
+@media only screen and (max-width: 768px) {
     .container {
         padding: 10px;
+        margin: 15px auto;
     }
     
-    /* Placar */
     .placar {
         flex-direction: column;
-        padding: 15px;
+        padding: 20px;
     }
     
     .jogador {
@@ -453,64 +562,11 @@ body {
         margin: 10px 0;
     }
     
-    .jogador-icon {
-        width: 60px;
-        height: 60px;
-        font-size: 2rem;
-    }
-    
-    .pontos {
-        font-size: 1.5rem;
-    }
-    
-    /* Colunas de tarefas */
     .colunas-tarefas {
         grid-template-columns: 1fr;
-        gap: 15px;
+        gap: 20px;
     }
     
-    /* Tarefas */
-    .tarefa-item {
-        padding: 10px;
-        font-size: 0.9rem;
-    }
-    
-    .check-btn {
-        font-size: 1.2rem;
-    }
-    
-    .pontos-tarefa {
-        font-size: 0.8rem;
-        padding: 2px 6px;
-    }
-    
-    /* Cabeçalhos */
-    .header-batalha h1, 
-    .header-planejamento h1 {
-        font-size: 1.5rem;
-    }
-    
-    /* Diferença */
-    .diferenca {
-        font-size: 1rem;
-        padding: 10px;
-    }
-    
-    /* Dias da semana (planejamento) */
-    .dias-semana {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 5px;
-    }
-    
-    .dia-card {
-        padding: 10px;
-    }
-    
-    .dia-card h3 {
-        font-size: 0.9rem;
-    }
-    
-    /* Diário e Gratidão */
     .conquistas-grid,
     .gratidao-grid,
     .importantes-grid {
@@ -518,30 +574,128 @@ body {
         gap: 15px;
     }
     
-    .conquista-card,
-    .gratidao-card,
-    .importante-card {
+    .dias-semana {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    /* NAVBAR MOBILE */
+    .nav-container {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        width: 100%;
+    }
+    
+    .nav-brand {
+        color: white;
+        font-size: 1.4rem;
+        background: rgba(255,255,255,0.15);
+        padding: 8px 20px;
+        border-radius: 30px;
+        backdrop-filter: blur(5px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        margin-bottom: 5px;
+        display: inline-block;
+    }
+    
+    .nav-menu {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 10px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        border-radius: 30px;
+        padding: 8px;
+    }
+    
+    .nav-link {
+        color: white;
+        background: rgba(118, 75, 162, 0.7);
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: bold;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        backdrop-filter: blur(5px);
+    }
+    
+    .nav-link:hover {
+        background: rgba(118, 75, 162, 1);
+        transform: scale(1.05);
+    }
+    
+    /* HEADER MOBILE */
+    .header-batalha h1, 
+    .header-planejamento h1 {
+        color: white;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        font-size: 1.4rem;
+        margin-bottom: 5px;
+        background: rgba(0,0,0,0.2);
+        padding: 8px 15px;
+        border-radius: 30px;
+        display: inline-block;
+    }
+    
+    .header-batalha, 
+    .header-planejamento {
+        margin-top: 5px;
         margin-bottom: 15px;
     }
     
-    .conquista-foto,
-    .gratidao-foto,
-    .importante-foto {
-        height: 150px;
+    /* PLACAR MOBILE */
+    .jogador-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 2rem;
     }
     
-    /* Botões */
+    .pontos {
+        font-size: 1.3rem;
+    }
+    
+    /* TAREFAS MOBILE */
+    .tarefa-item {
+        padding: 8px;
+        font-size: 0.9rem;
+        flex-wrap: wrap;
+    }
+    
+    .descricao {
+        width: 100%;
+        margin: 5px 0;
+        order: 1;
+    }
+    
+    .pontos-tarefa {
+        order: 2;
+    }
+    
+    .badge-extra {
+        order: 3;
+    }
+    
+    /* BOTÕES MOBILE */
     .btn-embaralhar,
     .btn-reset,
     .btn-adicionar,
-    .btn-primary {
+    .btn-primary,
+    .btn-extra {
         width: 100%;
         margin: 5px 0;
         padding: 12px;
         font-size: 1rem;
     }
     
-    /* Formulários */
+    /* FORMULÁRIOS MOBILE */
     .form-tarefa-dia,
     .form-extra,
     .registro-card,
@@ -556,290 +710,60 @@ body {
         width: 100%;
     }
     
-    /* Centralizar texto */
-    body {
-        text-align: center;
-    }
-    
-    .tarefa-item {
-        text-align: left;
-    }
-    
-    /* Ajustes específicos para o que estava voando */
-    .nav-menu {
-        display: flex;
-        flex-wrap: wrap;
-    }
-    
-    .nav-link {
-        margin: 2px;
-    }
-    
-    /* Garantir que o WebView no MIT App Inventor funcione */
-    html, body {
-        width: 100%;
-        overflow-x: hidden;
-    }
-    
-    img {
-        max-width: 100%;
-        height: auto;
-    }
-}
-
-/* Ajustes para telas muito pequenas (menos de 400px) */
-@media only screen and (max-width: 400px) {
-    .nav-link {
-        font-size: 0.8rem;
-        padding: 4px 8px;
-    }
-    
-    .jogador-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-    }
-    
-    .pontos {
-        font-size: 1.2rem;
-    }
-    
-    h1 {
-        font-size: 1.3rem;
-    }
-    
-    h2 {
-        font-size: 1.1rem;
-    }
-    
-    h3 {
-        font-size: 1rem;
-    }
-    
-    .tarefa-item {
-        flex-wrap: wrap;
-    }
-    
-    .descricao {
-        width: 100%;
-        margin: 5px 0;
-    }
-}
-
-/* Ajustes para tablets (telas médias) */
-@media only screen and (min-width: 601px) and (max-width: 768px) {
-    .dias-semana {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .conquistas-grid,
-    .gratidao-grid,
-    .importantes-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-/* Garantir que o conteúdo não ultrapasse os limites */
-* {
-    max-width: 100%;
-}
-/* ======================================== */
-/* CORREÇÕES ESPECÍFICAS PARA MOBILE */
-/* ======================================== */
-
-@media only screen and (max-width: 600px) {
-    /* Container da navbar para mobile */
-    .nav-container {
-        flex-direction: column !important;
-        align-items: center !important;
-        padding: 10px !important;
-        width: 100% !important;
-    }
-    
-    /* Menu de navegação */
-    .nav-menu {
-        display: flex !important;
-        flex-wrap: wrap !important;
-        justify-content: center !important;
-        gap: 8px !important;
-        margin-top: 10px !important;
-        width: 100% !important;
-        background: rgba(255, 255, 255, 0.1) !important;
-        backdrop-filter: blur(5px) !important;
-        border-radius: 30px !important;
-        padding: 8px !important;
-    }
-    
-    /* Links da navbar */
-    .nav-link {
-        color: white !important;
-        background: rgba(118, 75, 162, 0.7) !important;
-        padding: 8px 12px !important;
-        border-radius: 20px !important;
-        font-size: 0.85rem !important;
-        font-weight: bold !important;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 4px !important;
-        backdrop-filter: blur(5px) !important;
-    }
-    
-    /* Efeito hover */
-    .nav-link:hover {
-        background: rgba(118, 75, 162, 1) !important;
-        transform: scale(1.05) !important;
-    }
-    
-    /* Título da página */
-    .header-batalha h1, 
-    .header-planejamento h1 {
-        color: white !important;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.5) !important;
-        font-size: 1.4rem !important;
-        margin-bottom: 5px !important;
-        background: rgba(0,0,0,0.2) !important;
-        padding: 8px 15px !important;
-        border-radius: 30px !important;
-        display: inline-block !important;
-    }
-    
-    /* Container do título */
-    .header-batalha, 
-    .header-planejamento {
-        margin-top: 5px !important;
-        margin-bottom: 15px !important;
-    }
-    
-    /* Ajuste da marca (Dual You) */
-    .nav-brand {
-        color: white !important;
-        font-size: 1.4rem !important;
-        background: rgba(255,255,255,0.15) !important;
-        padding: 8px 20px !important;
-        border-radius: 30px !important;
-        backdrop-filter: blur(5px) !important;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
-        margin-bottom: 5px !important;
-        display: inline-block !important;
-    }
-}
-
-/* Ajuste para telas muito pequenas */
-@media only screen and (max-width: 380px) {
-    .nav-link {
-        padding: 6px 8px !important;
-        font-size: 0.75rem !important;
-    }
-    
-    .nav-menu {
-        gap: 4px !important;
-    }
-}
-/* ======================================== */
-/* TELA CHEIA - 100% DO CELULAR */
-/* ======================================== */
-
-html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    background-attachment: fixed; /* Fundo fixo */
-}
-
-.container {
-    width: 100%;
-    min-height: 100vh; /* Mínimo de 100% da altura da tela */
-    max-width: 100%;
-    margin: 0;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-}
-
-/* Garantir que tudo ocupe o espaço disponível */
-.placar {
-    width: 100%;
-    margin: 10px 0;
-}
-
-.tarefas-container {
-    width: 100%;
-    flex: 1; /* Ocupa espaço restante */
-    margin: 10px 0;
-}
-
-/* Navbar adaptável */
-.navbar {
-    width: 100%;
-    padding: 5px 0;
-}
-
-.nav-container {
-    width: 100%;
-    max-width: 100%;
-    padding: 5px 10px;
-    flex-direction: column;
-}
-
-.nav-menu {
-    width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-/* Ajuste para telas pequenas */
-@media only screen and (max-width: 600px) {
-    .container {
-        padding: 5px;
-    }
-    
-    .placar {
-        padding: 10px;
-    }
-    
-    .jogador-icon {
-        width: 50px;
-        height: 50px;
-        font-size: 2rem;
-    }
-    
-    .pontos {
-        font-size: 1.3rem;
-    }
-    
-    .colunas-tarefas {
-        gap: 10px;
-    }
-    
-    .tarefa-item {
-        padding: 8px;
-    }
-    
-    /* Remover margens extras */
-    .versus {
-        padding: 0 5px;
-    }
-    
-    /* Ajustar fonte */
+    /* AJUSTES GERAIS */
     body {
         font-size: 14px;
     }
+    
+    .diferenca {
+        font-size: 1rem;
+        padding: 10px;
+    }
 }
 
-/* Para telas muito pequenas (menos de 350px) */
-@media only screen and (max-width: 350px) {
+@media only screen and (max-width: 380px) {
+    .nav-link {
+        padding: 6px 8px;
+        font-size: 0.75rem;
+    }
+    
+    .nav-menu {
+        gap: 4px;
+    }
+    
     .jogador-icon {
         width: 40px;
         height: 40px;
         font-size: 1.5rem;
     }
     
-    .nav-link {
-        padding: 4px 6px;
-        font-size: 0.7rem;
+    .pontos {
+        font-size: 1.1rem;
     }
+    
+    h1 {
+        font-size: 1.2rem;
+    }
+    
+    h2 {
+        font-size: 1rem;
+    }
+    
+    h3 {
+        font-size: 0.9rem;
+    }
+}
+
+/* UTILITÁRIOS */
+.text-center {
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
 }
