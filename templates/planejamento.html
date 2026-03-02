@@ -53,8 +53,11 @@
             <h3>{{ dia }}</h3>
             <div class="tarefas-lista">
                 {% for tarefa in tarefas_por_dia[dia] %}
-                    <div class="tarefa-item-planejamento">
+                    <div class="tarefa-item-planejamento" style="display: flex; justify-content: space-between; align-items: center;">
                         <span>{{ tarefa.descricao }}</span>
+                        <form action="{{ url_for('remover_tarefa', tarefa_id=tarefa.id) }}" method="post" style="margin-left: 10px;" onsubmit="return confirm('Remover esta tarefa?')">
+                            <button type="submit" class="btn-remover" style="background: #e74c3c; color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer;">🗑️</button>
+                        </form>
                     </div>
                 {% else %}
                     <p class="sem-tarefas">Nenhuma tarefa fixa</p>
@@ -65,12 +68,15 @@
     
     <!-- Tarefas Extras -->
     <div class="dia-tarefas" style="margin-top: 30px; background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);">
-        <h3>✨ Tarefas Extras</h3>
+        <h3>✨ Tarefas Extras (aparecem todos os dias)</h3>
         <div class="tarefas-lista">
             {% for tarefa in tarefas_extra %}
-                <div class="tarefa-item-planejamento">
+                <div class="tarefa-item-planejamento" style="display: flex; justify-content: space-between; align-items: center;">
                     <span>{{ tarefa.descricao }}</span>
                     <span class="badge-extra">Extra</span>
+                    <form action="{{ url_for('remover_tarefa', tarefa_id=tarefa.id) }}" method="post" style="margin-left: 10px;" onsubmit="return confirm('Remover esta tarefa extra?')">
+                        <button type="submit" class="btn-remover" style="background: #e74c3c; color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer;">🗑️</button>
+                    </form>
                 </div>
             {% else %}
                 <p class="sem-tarefas">Nenhuma tarefa extra</p>
@@ -120,4 +126,5 @@ function esconderFormExtra() {
     document.getElementById('form-extra').style.display = 'none';
 }
 </script>
-{% endblock %}
+
+{% endblock %}  <!-- ⚠️ IMPORTANTE: Este endblock fecha o content -->
