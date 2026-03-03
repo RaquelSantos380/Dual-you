@@ -249,15 +249,26 @@ def adicionar_tarefa_extra():
     if descricao:
         nova_tarefa = Tarefa(
             descricao=descricao,
-            dia_semana='Extra',
+            dia_semana='Extras',
             concluida_robo=False,
             concluida_usuario=False,
             extra=True
         )
         db.session.add(nova_tarefa)
         db.session.commit()
-        flash('Tarefa extra adicionada!', 'success')
+        flash('Tarefa extra adicionada! Ela aparecerá todos os dias.', 'success')
     
+    return redirect(url_for('planejamento'))
+
+@app.route('/remover_tarefa/<int:tarefa_id>', methods=['POST'])
+def remover_tarefa(tarefa_id):
+    tarefa = Tarefa.query.get(tarefa_id)
+    if tarefa:
+        # Remove também as ocorrências desta tarefa nos dias
+        TarefaDia.query.filter_by(tarefa_id=tarefa_id).delete()
+        db.session.delete(tarefa)
+        db.session.commit()
+        flash('Tarefa removida com sucesso!', 'success')
     return redirect(url_for('planejamento'))
 
 @app.route('/resetar_tarefas', methods=['POST'])

@@ -767,3 +767,238 @@ img {
     max-width: 100%;
     height: auto;
 }
+/* ======================================== */
+/* BOTÕES MAIORES PARA ANDROID */
+/* ======================================== */
+
+@media only screen and (max-width: 600px) {
+    /* Navbar com botões maiores */
+    .nav-menu {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 12px !important;  /* Aumentei o espaçamento */
+        margin-top: 15px !important;
+        width: 100% !important;
+        background: rgba(255, 255, 255, 0.15) !important;
+        backdrop-filter: blur(10px) !important;
+        border-radius: 40px !important;
+        padding: 12px !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2) !important;
+    }
+    
+    /* Links da navbar - BOTÕES MAIORES */
+    .nav-link {
+        color: white !important;
+        background: rgba(118, 75, 162, 0.8) !important;
+        padding: 14px 18px !important;  /* AUMENTEI MUITO O TAMANHO */
+        border-radius: 30px !important;
+        font-size: 1.1rem !important;    /* Fonte maior */
+        font-weight: bold !important;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+        backdrop-filter: blur(5px) !important;
+        min-width: 70px !important;      /* Largura mínima */
+        text-align: center !important;
+        border: 1px solid rgba(255,255,255,0.2) !important;
+        margin: 2px !important;
+    }
+    
+    /* Efeito ao tocar (em vez de hover) */
+    .nav-link:active {
+        background: rgba(118, 75, 162, 1) !important;
+        transform: scale(0.98) !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+    }
+    
+    /* Botões de ação principais (Adicionar, Salvar, etc) */
+    .btn-confirmar, 
+    .btn-cancelar,
+    .btn-extra,
+    .btn-embaralhar,
+    .btn-reset,
+    .btn-adicionar,
+    .btn-primary,
+    .btn-salvar,
+    .btn-voltar {
+        padding: 16px 20px !important;  /* Botões maiores */
+        font-size: 1.2rem !important;    /* Texto maior */
+        border-radius: 30px !important;
+        min-height: 60px !important;     /* Altura mínima */
+        margin: 8px 0 !important;
+        width: 100% !important;
+        font-weight: bold !important;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2) !important;
+    }
+    
+    /* Botões de check nas tarefas */
+    .check-btn {
+        font-size: 2rem !important;      /* MUITO MAIOR */
+        min-width: 50px !important;
+        min-height: 50px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: rgba(255,255,255,0.9) !important;
+        border-radius: 15px !important;
+        padding: 5px !important;
+    }
+    
+    /* Ícones dos jogadores */
+    .jogador-icon {
+        width: 70px !important;
+        height: 70px !important;
+        font-size: 2.5rem !important;
+    }
+    
+    /* Pontuação */
+    .pontos {
+        font-size: 2rem !important;
+    }
+    
+    /* Texto dos jogadores */
+    .jogador-info h3 {
+        font-size: 1.3rem !important;
+    }
+    
+    /* Tarefas */
+    .tarefa-item {
+        padding: 15px !important;
+        font-size: 1.1rem !important;
+        margin: 5px 0 !important;
+        border-radius: 15px !important;
+    }
+    
+    .pontos-tarefa {
+        font-size: 1rem !important;
+        padding: 6px 12px !important;
+    }
+    
+    .badge-extra {
+        font-size: 0.9rem !important;
+        padding: 4px 10px !important;
+    }
+    
+    /* Cabeçalhos */
+    .header-batalha h1, 
+    .header-planejamento h1 {
+        font-size: 1.8rem !important;
+        margin-bottom: 10px !important;
+        padding: 12px 20px !important;
+    }
+    
+    /* Diferença */
+    .diferenca {
+        font-size: 1.2rem !important;
+        padding: 15px !important;
+    }
+    
+    /* Cards de diário e gratidão */
+    .conquista-card,
+    .gratidao-card,
+    .importante-card {
+        border-radius: 25px !important;
+    }
+    
+    .conquista-conteudo h3,
+    .gratidao-conteudo h3,
+    .importante-conteudo h3 {
+        font-size: 1.4rem !important;
+    }
+    
+    .conquista-data,
+    .gratidao-data,
+    .importante-data {
+        font-size: 1rem !important;
+    }
+    
+    .conquista-sentimento p {
+        font-size: 1.2rem !important;
+    }
+    
+    /* Formulários */
+    .registro-card,
+    .adicionar-card {
+        padding: 25px !important;
+    }
+    
+    .registro-card h1,
+    .adicionar-card h1 {
+        font-size: 2rem !important;
+    }
+    
+    .form-group label {
+        font-size: 1.2rem !important;
+        margin-bottom: 8px !important;
+    }
+    
+    .form-group select,
+    .form-group textarea,
+    .form-group input[type="text"],
+    .form-group input[type="url"],
+    .form-group input[type="file"] {
+        padding: 15px !important;
+        font-size: 1.1rem !important;
+        border-radius: 15px !important;
+    }
+    
+    /* Botão de remover */
+    .btn-remover {
+        width: 50px !important;
+        height: 50px !important;
+        font-size: 1.5rem !important;
+        border-radius: 12px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+}
+
+/* Para telas MUITO pequenas (menos de 350px) */
+@media only screen and (max-width: 350px) {
+    .nav-link {
+        padding: 12px 14px !important;
+        font-size: 1rem !important;
+        min-width: 60px !important;
+    }
+    
+    .jogador-icon {
+        width: 60px !important;
+        height: 60px !important;
+        font-size: 2rem !important;
+    }
+    
+    .pontos {
+        font-size: 1.6rem !important;
+    }
+    
+    .btn-confirmar, 
+    .btn-cancelar,
+    .btn-extra,
+    .btn-embaralhar,
+    .btn-reset {
+        padding: 14px 16px !important;
+        font-size: 1rem !important;
+        min-height: 50px !important;
+    }
+}
+
+/* Ajustes para tablets */
+@media only screen and (min-width: 601px) and (max-width: 768px) {
+    .nav-link {
+        padding: 12px 16px !important;
+        font-size: 1rem !important;
+    }
+    
+    .btn-confirmar, 
+    .btn-cancelar,
+    .btn-extra,
+    .btn-embaralhar,
+    .btn-reset {
+        padding: 14px 18px !important;
+        font-size: 1.1rem !important;
+    }
+}
