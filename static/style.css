@@ -1002,3 +1002,227 @@ img {
         font-size: 1.1rem !important;
     }
 }
+/* ======================================== */
+/* CORREÇÃO DIÁRIO E IMPORTANTES - MOBILE */
+/* ======================================== */
+
+@media only screen and (max-width: 600px) {
+    /* CONTAINER PRINCIPAL DO DIÁRIO */
+    .diario-container,
+    .importantes-container,
+    .gratidao-container {
+        width: 100% !important;
+        padding: 10px !important;
+        margin: 0 !important;
+        overflow-x: hidden !important;
+    }
+    
+    /* GRID DE CARDS */
+    .conquistas-grid,
+    .importantes-grid,
+    .gratidao-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    
+    /* CARDS INDIVIDUAIS */
+    .conquista-card,
+    .importante-card,
+    .gratidao-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 0 15px 0 !important;
+        padding: 0 !important;
+        border-radius: 20px !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+    }
+    
+    /* FOTO DO CARD */
+    .conquista-foto,
+    .importante-foto,
+    .gratidao-foto {
+        width: 100% !important;
+        height: 200px !important;
+        overflow: hidden !important;
+    }
+    
+    .conquista-foto img,
+    .importante-foto img,
+    .gratidao-foto img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+    }
+    
+    /* CONTEÚDO DO CARD */
+    .conquista-conteudo,
+    .importante-conteudo,
+    .gratidao-conteudo {
+        width: 100% !important;
+        padding: 20px !important;
+        box-sizing: border-box !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+    
+    /* TÍTULOS DOS CARDS */
+    .conquista-conteudo h3,
+    .importante-conteudo h3,
+    .gratidao-conteudo h3 {
+        font-size: 1.5rem !important;
+        margin-bottom: 10px !important;
+        color: #333 !important;
+        line-height: 1.3 !important;
+        word-break: break-word !important;
+        width: 100% !important;
+    }
+    
+    /* DATA */
+    .conquista-data,
+    .importante-data,
+    .gratidao-data {
+        font-size: 1rem !important;
+        margin-bottom: 15px !important;
+        color: #666 !important;
+        width: 100% !important;
+    }
+    
+    /* TEXTO DO CARD */
+    .conquista-conteudo p,
+    .importante-conteudo p,
+    .gratidao-conteudo p {
+        font-size: 1.1rem !important;
+        line-height: 1.5 !important;
+        color: #555 !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+        width: 100% !important;
+        margin: 0 0 15px 0 !important;
+    }
+    
+    /* SENTIMENTO (DIÁRIO) */
+    .conquista-sentimento {
+        margin-bottom: 15px !important;
+        width: 100% !important;
+    }
+    
+    .sentimento-label {
+        font-size: 1rem !important;
+        color: #888 !important;
+        margin-bottom: 5px !important;
+        display: block !important;
+    }
+    
+    .conquista-sentimento p {
+        font-size: 1.2rem !important;
+        color: #2ecc71 !important;
+        font-style: italic !important;
+        margin: 0 !important;
+    }
+    
+    /* REFLEXÃO (DIÁRIO) */
+    .conquista-reflexao {
+        margin-top: 15px !important;
+        width: 100% !important;
+    }
+    
+    .reflexao-label {
+        font-size: 1rem !important;
+        color: #888 !important;
+        margin-bottom: 5px !important;
+        display: block !important;
+    }
+    
+    .conquista-reflexao p {
+        font-size: 1.1rem !important;
+        color: #555 !important;
+        margin: 0 !important;
+    }
+    
+    /* TÍTULO DA PÁGINA */
+    .diario-header h1,
+    .importantes-header h1,
+    .gratidao-header h1 {
+        font-size: 2rem !important;
+        margin-bottom: 10px !important;
+        text-align: center !important;
+        width: 100% !important;
+        word-break: break-word !important;
+    }
+    
+    .diario-header p,
+    .importantes-header p,
+    .gratidao-header p {
+        font-size: 1.1rem !important;
+        text-align: center !important;
+        width: 100% !important;
+        margin-bottom: 20px !important;
+    }
+    
+    /* BOTÃO DE ADICIONAR */
+    .btn-adicionar {
+        width: auto !important;
+        min-width: 200px !important;
+        margin: 0 auto 20px auto !important;
+        display: inline-block !important;
+        padding: 12px 24px !important;
+        font-size: 1.1rem !important;
+    }
+    
+    /* MENSAGEM DE VAZIO */
+    .conquista-empty,
+    .importante-empty,
+    .gratidao-empty {
+        width: 100% !important;
+        padding: 40px 20px !important;
+        text-align: center !important;
+        background: rgba(255,255,255,0.9) !important;
+        border-radius: 20px !important;
+        margin: 20px 0 !important;
+    }
+    
+    .empty-icon {
+        font-size: 4rem !important;
+        margin-bottom: 20px !important;
+    }
+    
+    .conquista-empty h3,
+    .importante-empty h3,
+    .gratidao-empty h3 {
+        font-size: 1.4rem !important;
+        margin-bottom: 10px !important;
+    }
+    
+    .conquista-empty p,
+    .importante-empty p,
+    .gratidao-empty p {
+        font-size: 1.1rem !important;
+        margin-bottom: 20px !important;
+    }
+}
+
+/* PARA TELAS MUITO PEQUENAS */
+@media only screen and (max-width: 380px) {
+    .conquista-conteudo h3,
+    .importante-conteudo h3,
+    .gratidao-conteudo h3 {
+        font-size: 1.3rem !important;
+    }
+    
+    .conquista-conteudo p,
+    .importante-conteudo p,
+    .gratidao-conteudo p {
+        font-size: 1rem !important;
+    }
+    
+    .diario-header h1,
+    .importantes-header h1,
+    .gratidao-header h1 {
+        font-size: 1.6rem !important;
+    }
+}
