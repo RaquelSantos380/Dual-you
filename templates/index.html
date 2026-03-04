@@ -1,48 +1,15 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="header-batalha">
-    <h1>⚔️ A Batalha Diária - {{ dia }}</h1>
-</div>
-
-<!-- Placar -->
-<div class="placar">
-    <div class="jogador robo">
-        <div class="jogador-icon">👥</div>
-        <div class="jogador-info">
-            <h3>Alter Ego</h3>
-            <div class="pontos">{{ pontos_robo }} pts</div>
-        </div>
-    </div>
-    
-    <div class="versus">VS</div>
-    
-    <div class="jogador humano">
-        <div class="jogador-icon">👤</div>
-        <div class="jogador-info">
-            <h3>Você</h3>
-            <div class="pontos">{{ pontos_usuario }} pts</div>
-        </div>
-    </div>
-</div>
-
-<!-- Mensagem de diferença -->
-<div class="diferenca {% if diferenca >= 0 %}positiva{% else %}negativa{% endif %}">
-    {% if diferenca > 0 %}
-        🎉 Você está {{ diferenca }} pontos na frente! Mandou bem!
-    {% elif diferenca < 0 %}
-        ⚔️ Você está {{ -diferenca }} pontos atrás. Vamos lá!
-    {% else %}
-        🤝 Empate técnico! Hora de virar o jogo!
-    {% endif %}
-</div>
+<!-- ALTER EGO NA CASA - COM BACKGROUND E PERSONAGEM -->
+{% include 'serumaninho_casa.html' %}
 
 <!-- Tarefas do dia -->
 <div class="tarefas-container">
-    <h2>Tarefas de Hoje</h2>
+    <h2>Tarefas de Hoje - {{ dia }}</h2>
     
     <div class="colunas-tarefas">
-        <!-- Coluna do Robô -->
+        <!-- Coluna do Alter Ego -->
         <div class="coluna robo-coluna">
             <h3>👥 Alter Ego</h3>
             <div class="tarefas-lista">
@@ -69,9 +36,7 @@
                             <span class="check">✅</span>
                         {% else %}
                             <form action="{{ url_for('concluir_tarefa', tarefa_dia_id=tarefa.id) }}" method="post" class="tarefa-form">
-                                <button type="submit" class="check-btn">
-                                    ⬜
-                                </button>
+                                <button type="submit" class="check-btn">⬜</button>
                             </form>
                         {% endif %}
                         <span class="descricao">{{ tarefa.tarefa.descricao }}</span>
@@ -82,7 +47,29 @@
                     </div>
                 {% endfor %}
             </div>
+            
+            <!-- Botão adicionar tarefa extra -->
+            <div class="tarefa-extra">
+                <button class="btn-extra" onclick="mostrarFormExtra()">+ Adicionar Tarefa Extra</button>
+                <div id="form-extra" class="form-extra" style="display: none;">
+                    <form action="{{ url_for('adicionar_tarefa_extra') }}" method="post">
+                        <input type="text" name="descricao" placeholder="Digite sua tarefa extra..." required>
+                        <button type="submit" class="btn-confirmar">Adicionar</button>
+                        <button type="button" class="btn-cancelar" onclick="esconderFormExtra()">Cancelar</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+<script>
+function mostrarFormExtra() {
+    document.getElementById('form-extra').style.display = 'block';
+}
+
+function esconderFormExtra() {
+    document.getElementById('form-extra').style.display = 'none';
+}
+</script>
 {% endblock %}

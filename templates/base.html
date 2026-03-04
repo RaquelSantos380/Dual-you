@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Dual You - Enfrente o dia. Enfrente você mesmo.</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -16,13 +16,11 @@
                 <a href="/diario" class="nav-link">📖 Diário</a>
                 <a href="/gratidao" class="nav-link">🙏 Gratidão</a>
                 <a href="/importantes" class="nav-link">⭐ Importantes</a>
-                <a href="/configuracoes" class="nav-link">⚙️</a>
             </div>
         </div>
     </nav>
     
     <main class="container">
-        <!-- Mensagens flash (para confirmações) -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
