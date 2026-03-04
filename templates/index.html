@@ -1,32 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- ALTER EGO NA CASA - COM BACKGROUND E PERSONAGEM -->
-{% include 'serumaninho_casa.html' %}
+<div class="header-batalha">
+    <h1>⚔️ Suas Tarefas de Hoje - {{ dia }}</h1>
+</div>
 
-<!-- Tarefas do dia -->
+<!-- TAREFAS PRIMEIRO (prioridade) -->
 <div class="tarefas-container">
-    <h2>Tarefas de Hoje - {{ dia }}</h2>
-    
     <div class="colunas-tarefas">
-        <!-- Coluna do Alter Ego -->
-        <div class="coluna robo-coluna">
-            <h3>👥 Alter Ego</h3>
-            <div class="tarefas-lista">
-                {% for tarefa in tarefas %}
-                    <div class="tarefa-item concluida">
-                        <span class="check">✅</span>
-                        <span class="descricao">{{ tarefa.tarefa.descricao }}</span>
-                        <span class="pontos-tarefa">+15 pts</span>
-                        {% if tarefa.tarefa.extra %}
-                            <span class="badge-extra">Extra</span>
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-        
-        <!-- Coluna do Humano -->
+        <!-- Coluna do Humano (suas tarefas) -->
         <div class="coluna humano-coluna">
             <h3>👤 Suas Tarefas</h3>
             <div class="tarefas-lista">
@@ -61,6 +43,11 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- ALTER EGO - AGORA EMBAIXO DAS TAREFAS -->
+<div style="margin-top: 30px;">
+    {% include 'serumaninho_casa.html' %}
 </div>
 
 <script>

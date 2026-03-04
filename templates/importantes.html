@@ -2,33 +2,58 @@
 
 {% block content %}
 <div class="importantes-container">
-    <div class="importantes-header">
-        <h1>⭐ Coisas Importantes</h1>
-        <p>Momentos que me lembram que eu sou capaz</p>
-        <a href="/adicionar_momento?tipo=importante" class="btn-adicionar">+ Adicionar momento importante</a>
+    <div class="importantes-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+        <div>
+            <h1>⭐ Coisas Importantes</h1>
+            <p>Momentos que me lembram que eu sou capaz</p>
+        </div>
+        
+        <div style="display: flex; gap: 10px;">
+            <!-- BOTÃO ADICIONAR - LARANJA COM TEXTO BRANCO -->
+            <a href="/adicionar_momento?tipo=importante" class="btn-adicionar" style="background: #e67e22; color: white; border: none; border-radius: 30px; padding: 12px 20px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 10px rgba(230, 126, 34, 0.3);">
+                ⭐ Adicionar
+            </a>
+            
+            <!-- BOTÃO APAGAR TUDO - VERMELHO COM TEXTO BRANCO -->
+            <form action="{{ url_for('deletar_todos_momentos', tipo='importante') }}" method="post" onsubmit="return confirm('⚠️ TEM CERTEZA? Isso vai apagar TODOS os seus momentos importantes!')">
+                <button type="submit" style="background: #e74c3c; color: white; border: none; border-radius: 30px; padding: 12px 20px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: bold; box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);">
+                    🗑️ Apagar tudo
+                </button>
+            </form>
+        </div>
     </div>
     
     <div class="importantes-grid">
         {% for momento in momentos %}
-        <div class="importante-card">
+        <div class="importante-card" style="position: relative; background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%); border-radius: 20px; overflow: hidden; box-shadow: 0 15px 35px rgba(230, 126, 34, 0.2); border: 1px solid rgba(230, 126, 34, 0.1);">
+            <!-- LIXEIRINHA INDIVIDUAL -->
+            <form action="{{ url_for('deletar_momento', momento_id=momento.id) }}" method="post" style="position: absolute; top: 10px; right: 10px; z-index: 10;" onsubmit="return confirm('Remover este momento?')">
+                <button type="submit" style="background: rgba(231, 76, 60, 0.9); color: white; border: none; border-radius: 50%; width: 36px; height: 36px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
+                    🗑️
+                </button>
+            </form>
+            
             {% if momento.foto %}
-            <div class="importante-foto">
-                <img src="{{ url_for('static', filename=momento.foto) }}" alt="{{ momento.titulo }}">
+            <div class="importante-foto" style="width: 100%; height: 250px; overflow: hidden;">
+                <img src="{{ url_for('static', filename=momento.foto) }}" alt="{{ momento.titulo }}" style="width: 100%; height: 100%; object-fit: cover;">
             </div>
             {% endif %}
             
-            <div class="importante-conteudo">
-                <h3>{{ momento.titulo }}</h3>
-                <div class="importante-data">{{ momento.data.strftime('%d/%m/%Y') }}</div>
-                <p>{{ momento.descricao }}</p>
+            <div class="importante-conteudo" style="padding: 25px;">
+                <h3 style="color: #e67e22; margin-bottom: 10px; font-size: 1.5rem;">{{ momento.titulo }}</h3>
+                <div style="font-size: 0.85rem; color: #b45f06; margin-bottom: 15px; font-style: italic;">{{ momento.data.strftime('%d/%m/%Y') }}</div>
+                <p style="color: #5d3a1a; line-height: 1.6;">{{ momento.descricao }}</p>
             </div>
         </div>
         {% else %}
-        <div class="importante-empty">
-            <div class="empty-icon">⭐</div>
-            <h3>Nenhum momento importante registrado ainda</h3>
-            <p>Registre aqui momentos que provam o quanto você é capaz!</p>
-            <a href="/adicionar_momento?tipo=importante" class="btn-adicionar">Adicionar primeiro momento</a>
+        <div class="importante-empty" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: rgba(255,245,230,0.9); border-radius: 20px;">
+            <div style="font-size: 4rem; margin-bottom: 20px; opacity: 0.7;">⭐</div>
+            <h3 style="color: #333; margin-bottom: 10px;">Nenhum momento importante registrado ainda</h3>
+            <p style="color: #666; margin-bottom: 30px;">Registre aqui momentos que provam o quanto você é capaz!</p>
+            <!-- BOTÃO ADICIONAR PRIMEIRO MOMENTO - LARANJA COM TEXTO BRANCO -->
+            <a href="/adicionar_momento?tipo=importante" style="background: #e67e22; color: white; border: none; border-radius: 30px; padding: 15px 30px; font-size: 1.1rem; cursor: pointer; display: inline-block; text-decoration: none; font-weight: bold; box-shadow: 0 4px 10px rgba(230, 126, 34, 0.3);">
+                ⭐ Adicionar primeiro momento
+            </a>
         </div>
         {% endfor %}
     </div>
@@ -53,24 +78,6 @@
     text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
 }
 
-.btn-adicionar {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 12px 30px;
-    background: white;
-    color: #e67e22;
-    text-decoration: none;
-    border-radius: 25px;
-    font-weight: bold;
-    transition: all 0.3s;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.btn-adicionar:hover {
-    transform: scale(1.05);
-    background: #f0f0f0;
-}
-
 .importantes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -79,72 +86,12 @@
 }
 
 .importante-card {
-    background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 15px 35px rgba(230, 126, 34, 0.2);
     transition: all 0.3s;
-    border: 1px solid rgba(230, 126, 34, 0.1);
 }
 
 .importante-card:hover {
     transform: translateY(-5px) scale(1.02);
     box-shadow: 0 20px 40px rgba(230, 126, 34, 0.3);
-}
-
-.importante-foto {
-    width: 100%;
-    height: 250px;
-    overflow: hidden;
-}
-
-.importante-foto img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s;
-}
-
-.importante-card:hover .importante-foto img {
-    transform: scale(1.1);
-}
-
-.importante-conteudo {
-    padding: 25px;
-    position: relative;
-}
-
-.importante-conteudo h3 {
-    color: #e67e22;
-    margin-bottom: 10px;
-    font-size: 1.5rem;
-}
-
-.importante-data {
-    font-size: 0.85rem;
-    color: #b45f06;
-    margin-bottom: 15px;
-    font-style: italic;
-}
-
-.importante-conteudo p {
-    color: #5d3a1a;
-    line-height: 1.6;
-    margin-bottom: 15px;
-}
-
-.importante-empty {
-    grid-column: 1 / -1;
-    text-align: center;
-    padding: 60px 20px;
-    background: rgba(255,245,230,0.9);
-    border-radius: 20px;
-}
-
-.empty-icon {
-    font-size: 4rem;
-    margin-bottom: 20px;
-    opacity: 0.7;
 }
 </style>
 {% endblock %}

@@ -2,14 +2,30 @@
 
 {% block content %}
 <div class="diario-container">
-    <div class="diario-header">
-        <h1>📖 Meu Diário de Conquistas</h1>
-        <p>Cada tarefa concluída é uma vitória. Registre aqui como você se sentiu!</p>
+    <div class="diario-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+        <div>
+            <h1>📖 Meu Diário de Conquistas</h1>
+            <p>Cada tarefa concluída é uma vitória. Registre aqui como você se sentiu!</p>
+        </div>
+        
+        <!-- Botão para apagar TUDO -->
+        <form action="{{ url_for('deletar_todas_conquistas') }}" method="post" onsubmit="return confirm('⚠️ TEM CERTEZA? Isso vai apagar TODAS as suas conquistas permanentemente!')">
+            <button type="submit" style="background: #f16657; color: white; border: none; border-radius: 30px; padding: 12px 20px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+                🗑️ Apagar tudo
+            </button>
+        </form>
     </div>
     
     <div class="conquistas-grid">
         {% for conquista in conquistas %}
-        <div class="conquista-card" style="animation: fadeIn 0.5s ease;">
+        <div class="conquista-card" style="position: relative;">
+            <!-- LIXEIRINHA INDIVIDUAL -->
+            <form action="{{ url_for('deletar_conquista', conquista_id=conquista.id) }}" method="post" style="position: absolute; top: 10px; right: 10px; z-index: 10;" onsubmit="return confirm('Remover esta conquista?')">
+                <button type="submit" style="background: rgba(231, 76, 60, 0.8); color: white; border: none; border-radius: 50%; width: 36px; height: 36px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+                    🗑️
+                </button>
+            </form>
+            
             <div class="conquista-data">
                 {{ conquista.data.strftime('%d/%m/%Y') }}
             </div>
@@ -78,6 +94,7 @@
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
 }
 
 .conquista-card:hover {
@@ -159,16 +176,6 @@
     opacity: 0.5;
 }
 
-.conquista-empty h3 {
-    color: #333;
-    margin-bottom: 10px;
-}
-
-.conquista-empty p {
-    color: #666;
-    margin-bottom: 30px;
-}
-
 .btn-primary {
     display: inline-block;
     padding: 12px 30px;
@@ -182,17 +189,6 @@
 
 .btn-primary:hover {
     transform: scale(1.05);
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 </style>
 {% endblock %}
