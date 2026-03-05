@@ -14,39 +14,19 @@
     <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
     
     <!-- Meta tags para Android -->
-    <meta name="theme-color" content="#667eea">
     <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#1a2f3f">
     
-    <!-- Meta tags gerais -->
-    <meta name="description" content="Dual You - Enfrente o dia, complete tarefas e descubra histórias com seu Alter Ego">
-    
-    <title>Dual You - Enfrente o dia. Enfrente você mesmo.</title>
+    <title>Dual You - Uma Jornada Pixelada</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/static/icons/icon-72x72.png">
-    <link rel="apple-touch-icon" href="/static/icons/icon-192x192.png">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="/" class="nav-brand">⚔️ Dual You</a>
-            <div class="nav-menu">
-                <a href="/" class="nav-link">Batalha Diária</a>
-                <a href="/planejamento" class="nav-link">Planejamento</a>
-                <a href="/diario" class="nav-link">📖 Diário</a>
-                <a href="/gratidao" class="nav-link">🙏 Gratidão</a>
-                <a href="/importantes" class="nav-link">⭐ Importantes</a>
-            </div>
-        </div>
-    </nav>
-    
     <main class="container">
         <!-- Mensagens flash -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}" style="background: #2ecc71; color: white; padding: 10px; border-radius: 5px; margin-bottom: 20px; text-align: center;">
+                    <div style="background: #2a5a3a; color: #ffd700; padding: 10px; border: 3px solid #ffd700; margin-bottom: 20px; text-align: center; font-family: 'Press Start 2P', cursive; font-size: 0.7rem; box-shadow: 5px 5px 0 #1a2f3f;">
                         {{ message }}
                     </div>
                 {% endfor %}
@@ -55,6 +35,20 @@
         
         {% block content %}{% endblock %}
     </main>
+    
+    <!-- NAVBAR AGORA EMBAIXO (PIXELADA) -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="nav-brand">⚔️ DUAL YOU</a>
+            <div class="nav-menu">
+                <a href="/" class="nav-link">⚔️ BATALHA</a>
+                <a href="/planejamento" class="nav-link">📅 PLANEJA</a>
+                <a href="/diario" class="nav-link">📖 DIÁRIO</a>
+                <a href="/gratidao" class="nav-link">🙏 GRATIDÃO</a>
+                <a href="/importantes" class="nav-link">⭐ IMPORTANTES</a>
+            </div>
+        </div>
+    </nav>
     
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
