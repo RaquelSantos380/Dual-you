@@ -2,8 +2,8 @@
   "name": "Dual You - Sua Jornada Diária",
   "short_name": "Dual You",
   "description": "Complete tarefas, descubra histórias e evolua com seu Alter Ego",
-  "start_url": "/?utm_source=homescreen",
-  "display": "fullscreen",
+  "start_url": "/",
+  "display": "standalone",
   "display_override": ["fullscreen", "standalone", "minimal-ui"],
   "orientation": "portrait",
   "background_color": "#764ba2",
@@ -64,4 +64,4 @@
   "categories": ["productivity", "lifestyle", "games"],
   "lang": "pt-BR",
   "dir": "ltr"
-}mani
+}
