@@ -1,71 +1,13 @@
 // ========================================
-// ANIMAÇÕES E INTERATIVIDADE
-// ========================================
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Animar placar ao carregar
-    const placar = document.querySelector('.placar');
-    if (placar) {
-        placar.style.opacity = '0';
-        placar.style.transform = 'translateY(-20px)';
-        
-        setTimeout(() => {
-            placar.style.transition = 'all 0.5s ease';
-            placar.style.opacity = '1';
-            placar.style.transform = 'translateY(0)';
-        }, 100);
-    }
-    
-    // Animar tarefas uma por uma
-    const tarefas = document.querySelectorAll('.tarefa-item');
-    tarefas.forEach((tarefa, index) => {
-        tarefa.style.opacity = '0';
-        tarefa.style.transform = 'translateX(-20px)';
-        
-        setTimeout(() => {
-            tarefa.style.transition = 'all 0.3s ease';
-            tarefa.style.opacity = '1';
-            tarefa.style.transform = 'translateX(0)';
-        }, 200 + (index * 100));
-    });
-});
-
-// ========================================
-// FUNÇÕES DE FORMULÁRIOS
-// ========================================
-
-function mostrarFormExtra() {
-    const form = document.getElementById('form-extra');
-    if (form) {
-        form.style.display = 'block';
-    }
-}
-
-function esconderFormExtra() {
-    const form = document.getElementById('form-extra');
-    if (form) {
-        form.style.display = 'none';
-    }
-}
-
-function mostrarFormDia(dia) {
-    document.getElementById('dia-selecionado').textContent = dia;
-    document.getElementById('dia-input').value = dia;
-    document.getElementById('form-tarefa-dia').style.display = 'block';
-}
-
-function esconderFormDia() {
-    document.getElementById('form-tarefa-dia').style.display = 'none';
-}
-
-// ========================================
-// SERVIÇO DE ATUALIZAÇÃO DO ALTER EGO
+// SERUMANINHO - FUNÇÃO COMPLETA
 // ========================================
 
 let ultimaFrase = '';
 let fraseTimeout;
+let ultimaPosicao = { x: 0, y: 0 };
+let tentativasReposicionamento = 0;
 
-function atualizarAlterEgo() {
+function atualizarSerumaninho() {
     fetch('/api/alterego')
         .then(response => response.json())
         .then(data => {
@@ -74,28 +16,43 @@ function atualizarAlterEgo() {
             
             if (!personagem || !container) return;
             
-            // Posicionamento do personagem
+            // ===== 1. POSICIONAMENTO PERFEITO =====
             const containerImg = container.querySelector('img');
             if (!containerImg) return;
             
             const containerWidth = containerImg.offsetWidth;
             const containerHeight = containerImg.offsetHeight;
+            
+            // Escala exata (imagem 2048x2048)
             const escalaX = containerWidth / 2048;
             const escalaY = containerHeight / 2048;
             
-            const x = data.x_absoluto * escalaX;
-            const y = data.y_absoluto * escalaY;
+            // Coordenadas absolutas com limites de segurança
+            let x = Math.max(20, Math.min(containerWidth - 20, data.x_absoluto * escalaX));
+            let y = Math.max(20, Math.min(containerHeight - 20, data.y_absoluto * escalaY));
+            
+            // Suaviza movimento (evita teleportes bruscos)
+            if (ultimaPosicao.x && Math.abs(x - ultimaPosicao.x) > 50) {
+                x = ultimaPosicao.x + (x - ultimaPosicao.x) * 0.3;
+            }
+            if (ultimaPosicao.y && Math.abs(y - ultimaPosicao.y) > 50) {
+                y = ultimaPosicao.y + (y - ultimaPosicao.y) * 0.3;
+            }
             
             personagem.style.left = x + 'px';
             personagem.style.top = y + 'px';
             
-            // Atualiza placar se existir
-            const alterPontos = document.getElementById('alter-pontos');
-            if (alterPontos) {
-                alterPontos.innerText = data.pontos + ' pts';
-            }
+            ultimaPosicao = { x, y };
             
-            // Atualiza barra de energia
+            // ===== 2. APLICAR HUMOR (COR E ANIMAÇÃO) =====
+            personagem.className = '';
+            personagem.classList.add(`humor-${data.humor}`);
+            
+            // ===== 3. ATUALIZAR STATUS =====
+            const alterPontos = document.getElementById('alter-pontos');
+            if (alterPontos) alterPontos.innerText = data.pontos + ' pts';
+            
+            // Barra de energia
             const energiaBar = document.getElementById('alter-energia-bar');
             if (energiaBar) {
                 energiaBar.style.width = data.energia + '%';
@@ -104,43 +61,103 @@ function atualizarAlterEgo() {
                 else energiaBar.style.background = '#4CAF50';
             }
             
-            // Atualiza status
+            // Textos de status
             const ambienteEl = document.getElementById('alter-ambiente');
             const acaoEl = document.getElementById('alter-acao');
             const humorEl = document.getElementById('alter-humor');
+            const humorEmoji = document.getElementById('alter-humor-emoji');
             const tarefasEl = document.getElementById('alter-tarefas');
             
-            if (ambienteEl) ambienteEl.innerHTML = `📍 ${data.ambiente_nome}`;
-            if (acaoEl) acaoEl.innerHTML = `✨ ${data.acao}`;
-            if (humorEl) humorEl.innerHTML = data.humor_emoji + ' ' + data.humor;
-            if (tarefasEl) tarefasEl.innerHTML = `⚔️ ${data.tarefas_concluidas} concluídas · ${data.tarefas_pendentes} pendentes`;
+            if (ambienteEl) ambienteEl.innerText = data.ambiente_nome;
+            if (acaoEl) acaoEl.innerText = data.acao;
+            if (humorEl) humorEl.innerText = data.humor;
+            if (humorEmoji) humorEmoji.innerText = data.humor_emoji;
+            if (tarefasEl) tarefasEl.innerText = `${data.tarefas_concluidas}/${data.tarefas_pendentes}`;
             
-            // FRASE NOVA?
+            // ===== 4. CONTROLAR INDICADOR DE HISTÓRIA =====
+            const indicador = document.getElementById('historia-indicador');
+            if (indicador) {
+                if (data.tem_frase_nova) {
+                    indicador.style.display = 'flex';
+                } else {
+                    indicador.style.display = 'none';
+                }
+            }
+            
+            // ===== 5. MOSTRAR NOVA FRASE (COM BALÃO INTELIGENTE) =====
             if (data.ultima_frase && data.ultima_frase !== ultimaFrase && data.tem_frase_nova) {
                 ultimaFrase = data.ultima_frase;
                 
                 const bolha = document.getElementById('alter-bolha');
                 const msg = document.getElementById('alter-mensagem');
+                const continuacao = document.getElementById('historia-continuacao');
                 const ultimaFraseContainer = document.getElementById('ultima-frase');
                 
                 if (bolha && msg) {
                     msg.innerText = data.ultima_frase;
-                    bolha.style.left = (x - 150) + 'px';
-                    bolha.style.top = (y - 100) + 'px';
+                    
+                    // Esconde continuacao (só aparece quando precisa de tarefa)
+                    if (continuacao) continuacao.style.display = 'none';
+                    
+                    // ===== POSICIONAMENTO INTELIGENTE DO BALÃO =====
+                    const containerRect = container.getBoundingClientRect();
+                    const bolhaWidth = 300; // Largura máxima
+                    const bolhaHeight = 150; // Altura aproximada
+                    
+                    // Calcula posição X (nunca sai da tela)
+                    let bolhaX = x;
+                    const margem = 20;
+                    
+                    if (bolhaX - bolhaWidth/2 < margem) {
+                        bolhaX = bolhaWidth/2 + margem;
+                    } else if (bolhaX + bolhaWidth/2 > containerWidth - margem) {
+                        bolhaX = containerWidth - bolhaWidth/2 - margem;
+                    }
+                    
+                    // Calcula posição Y (tenta em cima, se não couber, coloca embaixo)
+                    let bolhaY = y - 80; // 80px acima
+                    const espacoEmCima = y - bolhaHeight;
+                    const espacoEmBaixo = containerHeight - (y + 50);
+                    
+                    if (espacoEmCima < 20 && espacoEmBaixo > bolhaHeight) {
+                        bolhaY = y + 60; // Coloca embaixo
+                        // Ajusta a seta para baixo
+                        const seta = bolha.querySelector('div:first-child');
+                        if (seta) {
+                            seta.style.bottom = 'auto';
+                            seta.style.top = '-15px';
+                            seta.style.borderTop = 'none';
+                            seta.style.borderBottom = '15px solid #764ba2';
+                        }
+                    } else {
+                        // Volta seta para cima se necessário
+                        const seta = bolha.querySelector('div:first-child');
+                        if (seta) {
+                            seta.style.bottom = '-15px';
+                            seta.style.top = 'auto';
+                            seta.style.borderTop = '15px solid #764ba2';
+                            seta.style.borderBottom = 'none';
+                        }
+                    }
+                    
+                    bolha.style.left = bolhaX + 'px';
+                    bolha.style.top = bolhaY + 'px';
                     bolha.style.display = 'block';
                 }
                 
                 if (ultimaFraseContainer) {
-                    ultimaFraseContainer.innerText = '"' + data.ultima_frase + '"';
+                    ultimaFraseContainer.innerText = data.ultima_frase;
                 }
                 
+                // Remove balão após 8 segundos
                 if (fraseTimeout) clearTimeout(fraseTimeout);
                 fraseTimeout = setTimeout(() => {
+                    const bolha = document.getElementById('alter-bolha');
                     if (bolha) bolha.style.display = 'none';
                 }, 8000);
             }
             
-            // Interação ao clicar no personagem
+            // ===== 6. INTERAÇÃO AO CLICAR NO PERSONAGEM =====
             personagem.onclick = function() {
                 fetch('/api/alterego/historia')
                     .then(response => response.json())
@@ -152,215 +169,98 @@ function atualizarAlterEgo() {
                         if (bolha && msg) {
                             msg.innerText = historiaData.frase;
                             
+                            // Mostra continuacao se precisar de tarefa
                             if (continuacao) {
                                 continuacao.style.display = historiaData.precisa_tarefa ? 'block' : 'none';
                             }
                             
-                            bolha.style.left = (x - 150) + 'px';
-                            bolha.style.top = (y - 100) + 'px';
+                            // ===== POSICIONAMENTO PARA CLIQUE =====
+                            const containerRect = container.getBoundingClientRect();
+                            const bolhaWidth = 300;
+                            
+                            let bolhaX = x;
+                            const margem = 20;
+                            
+                            if (bolhaX - bolhaWidth/2 < margem) {
+                                bolhaX = bolhaWidth/2 + margem;
+                            } else if (bolhaX + bolhaWidth/2 > containerWidth - margem) {
+                                bolhaX = containerWidth - bolhaWidth/2 - margem;
+                            }
+                            
+                            let bolhaY = y - 80;
+                            const espacoEmCima = y - 150;
+                            const espacoEmBaixo = containerHeight - (y + 50);
+                            
+                            if (espacoEmCima < 20 && espacoEmBaixo > 150) {
+                                bolhaY = y + 60;
+                                const seta = bolha.querySelector('div:first-child');
+                                if (seta) {
+                                    seta.style.bottom = 'auto';
+                                    seta.style.top = '-15px';
+                                    seta.style.borderTop = 'none';
+                                    seta.style.borderBottom = '15px solid #764ba2';
+                                }
+                            } else {
+                                const seta = bolha.querySelector('div:first-child');
+                                if (seta) {
+                                    seta.style.bottom = '-15px';
+                                    seta.style.top = 'auto';
+                                    seta.style.borderTop = '15px solid #764ba2';
+                                    seta.style.borderBottom = 'none';
+                                }
+                            }
+                            
+                            bolha.style.left = bolhaX + 'px';
+                            bolha.style.top = bolhaY + 'px';
                             bolha.style.display = 'block';
                             
+                            // Remove balão após 10 segundos
                             setTimeout(() => {
                                 bolha.style.display = 'none';
                             }, 10000);
                         }
+                        
+                        // Atualiza última frase
+                        const ultimaFraseContainer = document.getElementById('ultima-frase');
+                        if (ultimaFraseContainer) {
+                            ultimaFraseContainer.innerText = historiaData.frase;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Erro ao buscar história:', error);
+                        const bolha = document.getElementById('alter-bolha');
+                        const msg = document.getElementById('alter-mensagem');
+                        if (bolha && msg) {
+                            msg.innerText = 'Oops... Tente novamente!';
+                            bolha.style.display = 'block';
+                            setTimeout(() => {
+                                bolha.style.display = 'none';
+                            }, 3000);
+                        }
                     });
             };
         })
-        .catch(error => console.error('Erro ao atualizar Alter Ego:', error));
+        .catch(error => console.error('Erro ao atualizar Serumaninho:', error));
 }
-
-// ========================================
-// SERVICE WORKER (PWA)
-// ========================================
-
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/static/sw.js').then(function(registration) {
-            console.log('ServiceWorker registrado com sucesso: ', registration.scope);
-        }, function(err) {
-            console.log('Falha no registro do ServiceWorker: ', err);
-        });
-    });
-}
-
-// ========================================
-// BOTÃO DE INSTALAÇÃO DO PWA
-// ========================================
-
-let deferredPrompt;
-window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    
-    // Cria botão de instalação
-    const installButton = document.createElement('button');
-    installButton.innerText = '📲 Instalar App';
-    installButton.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        left: 20px;
-        z-index: 1000;
-        background: #764ba2;
-        color: white;
-        border: none;
-        border-radius: 30px;
-        padding: 12px 20px;
-        font-size: 1rem;
-        font-weight: bold;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        animation: pulse 2s infinite;
-    `;
-    
-    installButton.addEventListener('click', () => {
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then((choiceResult) => {
-            if (choiceResult.outcome === 'accepted') {
-                console.log('Usuário instalou o app');
-                // Mostra mensagem de agradecimento
-                const msg = document.createElement('div');
-                msg.innerText = '🎉 Obrigado por instalar o Dual You!';
-                msg.style.cssText = `
-                    position: fixed;
-                    bottom: 80px;
-                    left: 20px;
-                    background: #2ecc71;
-                    color: white;
-                    padding: 10px 20px;
-                    border-radius: 30px;
-                    z-index: 1000;
-                    font-weight: bold;
-                    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-                `;
-                document.body.appendChild(msg);
-                setTimeout(() => msg.remove(), 3000);
-            }
-            deferredPrompt = null;
-            installButton.remove();
-        });
-    });
-    
-    document.body.appendChild(installButton);
-    
-    // Remove o botão após 30 segundos se não clicar
-    setTimeout(() => {
-        if (installButton.parentNode) {
-            installButton.remove();
-        }
-    }, 30000);
-});
-
-// ========================================
-// ANIMAÇÕES
-// ========================================
-
-// Adiciona estilo de animação
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.05); }
-        100% { transform: scale(1); }
-    }
-    
-    .fade-in {
-        animation: fadeIn 0.5s ease;
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-`;
-document.head.appendChild(style);
 
 // ========================================
 // INICIALIZAÇÃO
 // ========================================
 
-// Atualiza o Alter Ego a cada 3 segundos
-setInterval(atualizarAlterEgo, 3000);
-
-// Executa uma vez ao carregar
-if (document.getElementById('casa-container')) {
-    setTimeout(atualizarAlterEgo, 500);
-}
+// Inicia a atualização quando a página carrega
+document.addEventListener('DOMContentLoaded', function() {
+    if (document.getElementById('casa-container')) {
+        // Primeira atualização após 500ms
+        setTimeout(atualizarSerumaninho, 500);
+        
+        // Atualiza a cada 3 segundos
+        setInterval(atualizarSerumaninho, 3000);
+    }
+});
 
 // Atualiza posição ao redimensionar a janela
-window.addEventListener('resize', () => {
+window.addEventListener('resize', function() {
     if (document.getElementById('casa-container')) {
-        atualizarAlterEgo();
+        atualizarSerumaninho();
     }
-});
-
-// ========================================
-// FUNÇÃO PARA ATUALIZAR PONTUAÇÃO (ANTIGA)
-// ========================================
-
-function atualizarPontuacao() {
-    const pontosRobo = document.querySelector('.robo .pontos');
-    const pontosHumano = document.querySelector('.humano .pontos');
-    
-    if (pontosRobo && pontosHumano) {
-        pontosRobo.style.transition = 'all 0.3s';
-        pontosHumano.style.transition = 'all 0.3s';
-        
-        pontosRobo.style.transform = 'scale(1.2)';
-        pontosHumano.style.transform = 'scale(1.2)';
-        
-        setTimeout(() => {
-            pontosRobo.style.transform = 'scale(1)';
-            pontosHumano.style.transform = 'scale(1)';
-        }, 300);
-    }
-}
-
-// ========================================
-// VERIFICA CONEXÃO COM INTERNET (OFFLINE)
-// ========================================
-
-window.addEventListener('offline', () => {
-    const offlineMsg = document.createElement('div');
-    offlineMsg.innerText = '📴 Você está offline. Algumas funcionalidades podem estar limitadas.';
-    offlineMsg.style.cssText = `
-        position: fixed;
-        top: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #e74c3c;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 30px;
-        z-index: 2000;
-        font-weight: bold;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        text-align: center;
-    `;
-    document.body.appendChild(offlineMsg);
-    setTimeout(() => offlineMsg.remove(), 5000);
-});
-
-window.addEventListener('online', () => {
-    const onlineMsg = document.createElement('div');
-    onlineMsg.innerText = '📶 Conexão restabelecida!';
-    onlineMsg.style.cssText = `
-        position: fixed;
-        top: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #2ecc71;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 30px;
-        z-index: 2000;
-        font-weight: bold;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        text-align: center;
-    `;
-    document.body.appendChild(onlineMsg);
-    setTimeout(() => onlineMsg.remove(), 3000);
 });

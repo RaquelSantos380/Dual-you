@@ -1,4 +1,4 @@
-<div id="casa-container" style="position: relative; width: 100%; max-width: 500px; margin: 10px auto; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.2); background: #f0f0f0;">
+<div id="casa-container" style="position: relative; width: 100%; max-width: 500px; margin: 10px auto; border-radius: 15px; overflow: visible; background: #f0f0f0;">
     
     <!-- Título da história -->
     <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 8px; color: white; text-align: center; font-size: 0.9rem; border-radius: 15px 15px 0 0;">
@@ -9,124 +9,167 @@
     <div style="position: relative; width: 100%; aspect-ratio: 1/1; background: #2c3e50;">
         <img src="{{ url_for('background_image') }}" style="width: 100%; height: 100%; object-fit: contain; display: block;" alt="Casa do Alter Ego">
         
-        <!-- O Alter Ego -->
-        <img id="alter-personagem" src="{{ url_for('alter_image') }}" style="position: absolute; width: 40px; height: 50px; object-fit: contain; transform: translate(-50%, -50%); transition: all 0.8s ease; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); cursor: pointer;" alt="Alter Ego">
+        <!-- O SERUMANINHO (ALTER EGO) -->
+        <img id="alter-personagem" src="{{ url_for('alter_image') }}" 
+             style="position: absolute; width: 40px; height: 50px; object-fit: contain; transform: translate(-50%, -50%); transition: all 0.8s ease; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); cursor: pointer; z-index: 50;" 
+             alt="Alter Ego">
         
-        <!-- BALÃO DE HISTÓRIA (maior para textos longos) -->
-        <div id="alter-bolha" style="position: absolute; background: white; padding: 15px 20px; border-radius: 30px; font-size: 0.9rem; box-shadow: 0 4px 20px rgba(0,0,0,0.3); border: 3px solid #764ba2; display: none; max-width: 300px; text-align: center; z-index: 100; white-space: normal; word-wrap: break-word;">
-            <div style="position: absolute; bottom: -12px; left: 20px; width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 12px solid #764ba2;"></div>
-            <span id="alter-mensagem" style="color: #333; line-height: 1.5;"></span>
-            <div id="historia-continuacao" style="margin-top: 10px; font-size: 0.8rem; color: #764ba2; font-style: italic; display: none;">
-                ⏳ Complete a próxima tarefa para continuar...
+        <!-- BALÃO DE HISTÓRIA (VERSÃO 3.0 - PERFEITO) -->
+        <div id="alter-bolha" style="position: absolute; background: white; padding: 15px 20px; border-radius: 30px; font-size: 0.95rem; box-shadow: 0 8px 25px rgba(0,0,0,0.4); border: 3px solid #764ba2; display: none; max-width: 300px; min-width: 220px; text-align: center; z-index: 1000; white-space: normal; word-wrap: break-word; pointer-events: none; transform: translateX(-50%); transition: opacity 0.3s;">
+            <!-- SETA DO BALÃO (APONTA PARA O PERSONAGEM) -->
+            <div style="position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 15px solid #764ba2; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));"></div>
+            
+            <!-- CONTEÚDO DO BALÃO -->
+            <div style="position: relative;">
+                <span id="alter-mensagem" style="color: #333; line-height: 1.5; display: block; font-weight: 500;"></span>
+                <div id="historia-continuacao" style="margin-top: 12px; font-size: 0.85rem; color: #764ba2; font-style: italic; display: none; border-top: 1px dashed #764ba2; padding-top: 8px;">
+                    ⏳ Complete a próxima tarefa para continuar...
+                </div>
             </div>
         </div>
         
-        <!-- Pequeno indicador de história -->
-        <div id="historia-indicador" style="position: absolute; top: 10px; right: 10px; background: rgba(118,75,162,0.9); color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.7rem; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-            📚 História em andamento
+        <!-- INDICADOR DE HISTÓRIA (quando tem história nova) -->
+        <div id="historia-indicador" style="position: absolute; top: 10px; right: 10px; background: rgba(118,75,162,0.95); color: white; padding: 6px 12px; border-radius: 30px; font-size: 0.75rem; box-shadow: 0 4px 10px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 5px; z-index: 60; backdrop-filter: blur(2px); border: 1px solid rgba(255,255,255,0.3);">
+            <span style="font-size: 1rem;">📚</span>
+            <span>Nova história disponível</span>
+        </div>
+        
+        <!-- BARRA DE ENERGIA (MAIS VISÍVEL) -->
+        <div style="position: absolute; bottom: 15px; left: 15px; right: 15px; background: rgba(0,0,0,0.6); height: 8px; border-radius: 10px; overflow: hidden; backdrop-filter: blur(2px); border: 1px solid rgba(255,255,255,0.2);">
+            <div id="alter-energia-bar" style="height: 100%; width: 100%; background: #4CAF50; transition: width 0.5s ease; border-radius: 10px;"></div>
         </div>
     </div>
     
-    <!-- Última frase do Alter Ego (fixa) -->
-    <div id="ultima-frase-container" style="background: rgba(118,75,162,0.1); padding: 10px; border-radius: 0 0 15px 15px; font-style: italic; color: #555; text-align: center; border-left: 3px solid #764ba2; font-size: 0.8rem; min-height: 50px;">
-        💭 <span id="ultima-frase">Clique no Alter Ego para começar a história...</span>
+    <!-- STATUS DO SERUMANINHO (EMBAIXO DA CASA) -->
+    <div style="background: white; padding: 12px; border-radius: 0 0 15px 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.8rem; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 2px solid #764ba2;">
+        <div style="display: flex; align-items: center; gap: 5px; background: #f8f8f8; padding: 6px 10px; border-radius: 30px;">
+            <span style="font-size: 1rem;">📍</span>
+            <span id="alter-ambiente">Sala</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 5px; background: #f8f8f8; padding: 6px 10px; border-radius: 30px;">
+            <span style="font-size: 1rem;">✨</span>
+            <span id="alter-acao">descansando</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 5px; background: #f8f8f8; padding: 6px 10px; border-radius: 30px;">
+            <span id="alter-humor-emoji" style="font-size: 1rem;">😊</span>
+            <span id="alter-humor">normal</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 5px; background: #f8f8f8; padding: 6px 10px; border-radius: 30px;">
+            <span style="font-size: 1rem;">⚔️</span>
+            <span id="alter-tarefas">0/0</span>
+        </div>
+    </div>
+    
+    <!-- ÚLTIMA FRASE (FIXA) -->
+    <div id="ultima-frase-container" style="background: rgba(118,75,162,0.1); padding: 10px 15px; margin-top: 8px; border-radius: 30px; font-style: italic; color: #555; text-align: center; border: 2px solid #764ba2; font-size: 0.85rem; min-height: 50px; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2px);">
+        <span style="margin-right: 5px;">💭</span>
+        <span id="ultima-frase">Clique no Alter Ego para começar a história...</span>
     </div>
 </div>
 
 <style>
+/* ========== ANIMAÇÕES DO SERUMANINHO ========== */
+
+/* Pulo suave */
 @keyframes bounce {
     0%, 100% { transform: translate(-50%, -50%) scale(1); }
-    50% { transform: translate(-50%, -55%) scale(1.05); }
+    50% { transform: translate(-50%, -55%) scale(1.02); }
 }
 
 #alter-personagem {
-    animation: bounce 3s infinite;
+    animation: bounce 3s infinite ease-in-out;
+    transition: all 0.8s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-@keyframes piscar {
-    0% { opacity: 1; }
-    50% { opacity: 0.7; }
-    100% { opacity: 1; }
+/* Piscar do balão quando aparece */
+@keyframes fadeInPop {
+    0% { opacity: 0; transform: translateX(-50%) scale(0.8); }
+    100% { opacity: 1; transform: translateX(-50%) scale(1); }
 }
 
 #alter-bolha {
-    animation: piscar 0.5s 3;
+    animation: fadeInPop 0.3s ease-out;
+}
+
+/* Estados de humor do personagem */
+.humor-feliz { 
+    filter: drop-shadow(0 0 12px gold); 
+}
+.humor-animado { 
+    filter: drop-shadow(0 0 15px orange); 
+    animation: bounce 0.5s infinite !important;
+}
+.humor-cansado { 
+    filter: grayscale(0.5) drop-shadow(0 0 8px gray); 
+    opacity: 0.9;
+    animation: bounce 4s infinite !important;
+}
+.humor-bravo { 
+    filter: drop-shadow(0 0 15px red); 
+    animation: shake 0.3s infinite !important;
+}
+.humor-misterioso { 
+    filter: drop-shadow(0 0 10px purple); 
+}
+.humor-nostalgico { 
+    filter: sepia(0.3) drop-shadow(0 0 10px #8B4513); 
+}
+.humor-divertido { 
+    filter: drop-shadow(0 0 12px #FF69B4); 
+}
+.humor-triste { 
+    filter: grayscale(0.7) drop-shadow(0 0 8px blue); 
+    opacity: 0.8;
+}
+.humor-calmo { 
+    filter: drop-shadow(0 0 10px #87CEEB); 
+}
+.humor-filosofico { 
+    filter: drop-shadow(0 0 12px #708090); 
+}
+.humor-carinhoso { 
+    filter: drop-shadow(0 0 15px pink); 
+}
+
+/* Animação de tremor (quando bravo) */
+@keyframes shake {
+    0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+    25% { transform: translate(-52%, -50%) rotate(-2deg); }
+    75% { transform: translate(-48%, -50%) rotate(2deg); }
+}
+
+/* Destaque para o indicador de história */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); background: rgba(118,75,162,0.95); }
+    50% { transform: scale(1.05); background: rgba(142, 68, 173, 0.95); }
+}
+
+#historia-indicador {
+    animation: pulse 2s infinite;
+}
+
+/* Responsividade */
+@media (max-width: 500px) {
+    #casa-container {
+        max-width: 100%;
+    }
+    
+    #alter-bolha {
+        max-width: 250px;
+        font-size: 0.85rem;
+        padding: 12px 15px;
+    }
+    
+    #alter-personagem {
+        width: 35px;
+        height: 45px;
+    }
+}
+
+@media (max-width: 350px) {
+    #alter-bolha {
+        max-width: 200px;
+        font-size: 0.8rem;
+    }
 }
 </style>
-
-<script>
-let ultimaFrase = '';
-let fraseTimeout;
-
-function atualizarAlterEgo() {
-    fetch('/api/alterego')
-        .then(response => response.json())
-        .then(data => {
-            const personagem = document.getElementById('alter-personagem');
-            const container = document.getElementById('casa-container');
-            
-            // Posicionamento
-            const containerImg = container.querySelector('img');
-            if (!containerImg) return;
-            
-            const containerWidth = containerImg.offsetWidth;
-            const containerHeight = containerImg.offsetHeight;
-            const escalaX = containerWidth / 2048;
-            const escalaY = containerHeight / 2048;
-            
-            const x = data.x_absoluto * escalaX;
-            const y = data.y_absoluto * escalaY;
-            
-            personagem.style.left = x + 'px';
-            personagem.style.top = y + 'px';
-            
-            // FRASE NOVA (história ou motivacional)
-            if (data.ultima_frase && data.ultima_frase !== ultimaFrase && data.tem_frase_nova) {
-                ultimaFrase = data.ultima_frase;
-                
-                const bolha = document.getElementById('alter-bolha');
-                const msg = document.getElementById('alter-mensagem');
-                msg.innerText = data.ultima_frase;
-                
-                bolha.style.left = (x - 150) + 'px';
-                bolha.style.top = (y - 100) + 'px';
-                bolha.style.display = 'block';
-                
-                document.getElementById('ultima-frase').innerText = '"' + data.ultima_frase + '"';
-                
-                if (fraseTimeout) clearTimeout(fraseTimeout);
-                fraseTimeout = setTimeout(() => {
-                    bolha.style.display = 'none';
-                }, 8000);  // Mais tempo para ler histórias
-            }
-            
-            // Interação ao clicar - PEDE HISTÓRIA
-            personagem.onclick = function() {
-                fetch('/api/alterego/historia')
-                    .then(response => response.json())
-                    .then(historiaData => {
-                        const bolha = document.getElementById('alter-bolha');
-                        document.getElementById('alter-mensagem').innerText = historiaData.frase;
-                        
-                        if (historiaData.precisa_tarefa) {
-                            document.getElementById('historia-continuacao').style.display = 'block';
-                        } else {
-                            document.getElementById('historia-continuacao').style.display = 'none';
-                        }
-                        
-                        bolha.style.left = (x - 150) + 'px';
-                        bolha.style.top = (y - 100) + 'px';
-                        bolha.style.display = 'block';
-                        
-                        setTimeout(() => {
-                            bolha.style.display = 'none';
-                        }, 10000);
-                    });
-            };
-        });
-}
-
-setInterval(atualizarAlterEgo, 3000);
-atualizarAlterEgo();
-window.addEventListener('resize', atualizarAlterEgo);
-</script>

@@ -1,47 +1,57 @@
 {
-  "name": "Dual You - O Jogo",
+  "name": "Dual You - Sua Jornada Diária",
   "short_name": "Dual You",
-  "description": "Enfrente o dia, complete tarefas e descubra histórias com seu Alter Ego",
-  "start_url": "/",
-  "display": "standalone",
+  "description": "Complete tarefas, descubra histórias e evolua com seu Alter Ego",
+  "start_url": "/?utm_source=homescreen",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone", "minimal-ui"],
+  "orientation": "portrait",
   "background_color": "#764ba2",
   "theme_color": "#667eea",
-  "orientation": "portrait",
+  "scope": "/",
+  "prefer_related_applications": false,
   "icons": [
     {
       "src": "/static/icons/icon-72x72.png",
       "sizes": "72x72",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/static/icons/icon-96x96.png",
       "sizes": "96x96",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/static/icons/icon-128x128.png",
       "sizes": "128x128",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/static/icons/icon-144x144.png",
       "sizes": "144x144",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/static/icons/icon-152x152.png",
       "sizes": "152x152",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/static/icons/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "maskable any"
     },
     {
       "src": "/static/icons/icon-384x384.png",
       "sizes": "384x384",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
       "src": "/static/icons/icon-512x512.png",
@@ -49,5 +59,9 @@
       "type": "image/png",
       "purpose": "maskable any"
     }
-  ]
+  ],
+  "splash_pages": null,
+  "categories": ["productivity", "lifestyle", "games"],
+  "lang": "pt-BR",
+  "dir": "ltr"
 }
