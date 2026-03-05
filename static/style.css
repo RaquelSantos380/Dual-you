@@ -1,146 +1,154 @@
 /* ======================================== */
-/* FONTE PIXELADA (NOSTÁLGICA) */
+/* FONTES NOSTÁLGICAS (MAS LEGÍVEIS) */
 /* ======================================== */
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Press+Start+2P&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    image-rendering: pixelated;
-    image-rendering: crisp-edges;
+    max-width: 100%;
 }
 
 body {
-    font-family: 'VT323', monospace;
-    background: linear-gradient(135deg, #1a2f3f 0%, #2a4a5a 100%);
+    font-family: 'Quicksand', sans-serif;
+    background: linear-gradient(135deg, #f8e3c2 0%, #ffe9ce 100%);
+    /* Tons de creme e pêssego - super suave */
     min-height: 100vh;
-    color: #70767c;
-    font-size: 1.2rem;
+    color: #4a3b2f; /* Marrom suave para texto */
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+h1, h2, h3, .nav-brand {
+    font-family: 'Press Start 2P', cursive;
+    color: #7b5e3b; /* Marrom dourado */
+    text-shadow: 2px 2px 0 #e9d2a7;
     letter-spacing: 1px;
 }
 
-h1, h2, h3, .nav-brand, .btn, button {
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.8rem;
-    line-height: 1.5;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
+h1 { font-size: 1.3rem; }
+h2 { font-size: 1.1rem; }
+h3 { font-size: 0.9rem; }
 
-/* ========== NAVBAR NOVA (AGORA EMBAIXO) ========== */
+/* ========== NAVBAR ========== */
 .navbar {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(10, 20, 30, 0.95);
-    backdrop-filter: blur(8px);
-    border-top: 4px solid #ffd700;
-    box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
+    background: rgba(255, 248, 235, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 3px solid #d4b48c;
+    box-shadow: 0 -5px 20px rgba(139, 69, 19, 0.1);
     z-index: 1000;
-    padding: 8px 0;
-    image-rendering: pixelated;
+    padding: 12px 0;
 }
 
 .nav-container {
-    max-width: 1200px;
+    max-width: 100%;
     margin: 0 auto;
     display: flex;
     justify-content: space-around;
     align-items: center;
     padding: 0 10px;
-    gap: 5px;
+    gap: 8px;
+    flex-wrap: wrap;
 }
 
 .nav-brand {
-    font-size: 0.7rem;
-    color: #ffd700;
+    font-size: 0.9rem;
+    color: #8b6b4d;
     text-decoration: none;
-    text-shadow: 3px 3px 0 #8b4513;
-    background: #2a4a5a;
-    padding: 10px 15px;
-    border: 3px solid #ffd700;
-    box-shadow: 5px 5px 0 #1a2f3f;
-    transform: translateY(-2px);
-    transition: all 0.1s ease;
+    text-shadow: 2px 2px 0 #f0dbc0;
+    background: #fff8e7;
+    padding: 10px 18px;
+    border: 2px solid #d4b48c;
+    border-radius: 30px;
+    box-shadow: 0 4px 0 #b89a7a;
+    font-family: 'Press Start 2P', cursive;
     white-space: nowrap;
+    transition: all 0.2s;
 }
 
 .nav-brand:hover {
-    transform: translateY(0px);
-    box-shadow: 3px 3px 0 #1a2f3f;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #b89a7a;
 }
 
 .nav-menu {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     flex-wrap: wrap;
     justify-content: center;
 }
 
 .nav-link {
-    color: #e0e8f0;
+    color: #5e4b3a;
     text-decoration: none;
-    padding: 8px 12px;
-    background: #2a4a5a;
-    border: 2px solid #8b4513;
-    box-shadow: 4px 4px 0 #1a2f3f;
-    font-size: 0.6rem;
-    transition: all 0.1s ease;
+    padding: 8px 15px;
+    background: #fff8e7;
+    border: 2px solid #d4b48c;
+    border-radius: 40px;
+    box-shadow: 0 3px 0 #b89a7a;
+    font-size: 0.75rem;
+    font-family: 'Press Start 2P', cursive;
     white-space: nowrap;
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    image-rendering: pixelated;
+    transition: all 0.2s;
 }
 
 .nav-link:hover {
-    background: #8b4513;
-    color: #ffd700;
-    border-color: #ffd700;
-    transform: translateY(-2px);
-    box-shadow: 6px 6px 0 #1a2f3f;
+    background: #d4b48c;
+    color: white;
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #b89a7a;
 }
 
-/* ========== CONTAINER PRINCIPAL (COM ESPAÇO PARA NAVBAR) ========== */
+/* ========== CONTAINER PRINCIPAL ========== */
 .container {
-    max-width: 1200px;
-    margin: 20px auto 100px auto;
-    padding: 0 20px;
-    min-height: calc(100vh - 120px);
+    max-width: 100%;
+    margin: 15px auto 100px auto;
+    padding: 0 15px;
+    min-height: calc(100vh - 115px);
 }
 
-/* ========== HEADERS PIXELADOS ========== */
+/* ========== HEADERS ========== */
 .header-batalha, .header-planejamento {
     text-align: center;
-    margin-bottom: 30px;
-    color: #ffd700;
-    text-shadow: 4px 4px 0 #8b4513, 6px 6px 0 #1a2f3f;
-    font-size: 1rem;
+    margin-bottom: 25px;
 }
 
 .header-batalha h1, .header-planejamento h1 {
-    background: #2a4a5a;
+    background: #fff8e7;
     display: inline-block;
-    padding: 15px 25px;
-    border: 4px solid #ffd700;
-    box-shadow: 8px 8px 0 #1a2f3f;
-    margin-bottom: 10px;
+    padding: 15px 30px;
+    border: 3px solid #d4b48c;
+    border-radius: 60px;
+    box-shadow: 0 6px 0 #b89a7a;
+    color: #7b5e3b;
+    font-size: 1.1rem;
 }
 
-/* ========== PLACAR PIXELADO ========== */
+.header-batalha p, .header-planejamento p {
+    color: #a0522d;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+/* ========== PLACAR ========== */
 .placar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #2a4a5a;
-    border: 4px solid #ffd700;
-    border-radius: 0;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 8px 8px 0 #1a2f3f;
-    image-rendering: pixelated;
+    background: #fff8e7;
+    border: 3px solid #d4b48c;
+    border-radius: 40px;
+    padding: 20px 25px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 0 #b89a7a;
 }
 
 .jogador {
@@ -148,9 +156,6 @@ h1, h2, h3, .nav-brand, .btn, button {
     align-items: center;
     gap: 15px;
     flex: 1;
-    background: #1a2f3f;
-    padding: 10px;
-    border: 2px solid #8b4513;
 }
 
 .jogador.robo {
@@ -165,58 +170,86 @@ h1, h2, h3, .nav-brand, .btn, button {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: #2a4a5a;
-    border: 3px solid #ffd700;
-    image-rendering: pixelated;
+    background: #d4b48c;
+    border-radius: 50%;
+    color: white;
+    box-shadow: 0 4px 0 #8b6b4d;
+}
+
+.jogador-info h3 {
+    color: #8b6b4d;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
 }
 
 .pontos {
-    font-size: 1.5rem;
-    font-weight: bold;
-    font-family: 'Press Start 2P', cursive;
-    color: #ffd700;
-    text-shadow: 3px 3px 0 #8b4513;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #b8860b;
 }
 
 .versus {
     font-size: 2rem;
     font-weight: bold;
-    color: #ffd700;
+    color: #cd853f;
     padding: 0 20px;
-    text-shadow: 4px 4px 0 #8b4513;
+    text-shadow: 2px 2px 0 #fff0d0;
 }
 
-/* ========== TAREFAS PIXELADAS ========== */
+/* ========== DIFERENÇA ========== */
+.diferenca {
+    background: #fff8e7;
+    border: 2px solid #d4b48c;
+    border-radius: 30px;
+    padding: 15px;
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 0 #b89a7a;
+    color: #5e4b3a;
+}
+
+.diferenca.positiva {
+    background: #e6f0da;
+    border-color: #8fbc8f;
+}
+
+.diferenca.negativa {
+    background: #f8dddd;
+    border-color: #cd5c5c;
+}
+
+/* ========== TAREFAS ========== */
 .tarefas-container {
-    background: #2a4a5a;
-    border: 4px solid #ffd700;
-    border-radius: 0;
+    background: #fff8e7;
+    border: 3px solid #d4b48c;
+    border-radius: 40px;
     padding: 25px;
-    box-shadow: 8px 8px 0 #1a2f3f;
-    margin-bottom: 30px;
+    box-shadow: 0 6px 0 #b89a7a;
+    margin-bottom: 25px;
 }
 
 .tarefas-container h2 {
-    color: #ffd700;
-    text-shadow: 3px 3px 0 #8b4513;
+    color: #7b5e3b;
+    text-align: center;
     margin-bottom: 20px;
-    font-size: 1rem;
 }
 
 .colunas-tarefas {
+    display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
 }
 
 .coluna {
-    background: #1a2f3f;
-    border: 3px solid #8b4513;
-    padding: 15px;
+    background: #fff5e6;
+    border: 2px solid #d4b48c;
+    border-radius: 30px;
+    padding: 20px;
 }
 
 .coluna h3 {
-    color: #ffd700;
-    text-shadow: 2px 2px 0 #8b4513;
+    color: #8b6b4d;
     margin-bottom: 15px;
     text-align: center;
 }
@@ -224,198 +257,315 @@ h1, h2, h3, .nav-brand, .btn, button {
 .tarefa-item {
     display: flex;
     align-items: center;
-    gap: 10px;
-    background: #2a4a5a;
-    padding: 12px;
-    border: 2px solid #8b4513;
-    margin-bottom: 8px;
-    box-shadow: 4px 4px 0 #1a2f3f;
-    transition: all 0.1s ease;
+    gap: 12px;
+    background: white;
+    padding: 12px 15px;
+    border: 2px solid #e9d2a7;
+    border-radius: 30px;
+    margin-bottom: 10px;
+    box-shadow: 0 3px 0 #d4b48c;
+    transition: all 0.2s;
 }
 
 .tarefa-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 6px 6px 0 #1a2f3f;
-    border-color: #ffd700;
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #d4b48c;
 }
 
 .tarefa-item.concluida {
-    background: #2a5a3a;
-    border-color: #ffd700;
+    background: #e6f0da;
+    border-color: #8fbc8f;
     opacity: 0.9;
 }
 
+.descricao {
+    color: #4a3b2f;
+    flex: 1;
+}
+
 .check-btn {
-    background: #1a2f3f;
-    border: 2px solid #8b4513;
-    font-size: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
     cursor: pointer;
-    padding: 5px;
     width: 40px;
     height: 40px;
-    image-rendering: pixelated;
-    transition: all 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
 }
 
 .check-btn:hover {
-    background: #ffd700;
-    border-color: #8b4513;
+    transform: scale(1.1);
 }
 
 .pontos-tarefa {
-    background: #1a2f3f;
-    color: #ffd700;
-    padding: 4px 8px;
-    border: 2px solid #8b4513;
-    font-size: 0.8rem;
-    font-family: 'Press Start 2P', cursive;
+    background: #fff5e6;
+    color: #b8860b;
+    padding: 5px 12px;
+    border: 2px solid #e9d2a7;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 0.9rem;
 }
 
 .badge-extra {
-    background: #8b4513;
-    color: #ffd700;
-    padding: 4px 8px;
-    border: 2px solid #ffd700;
+    background: #d4b48c;
+    color: white;
+    padding: 3px 10px;
+    border-radius: 30px;
     font-size: 0.7rem;
+    font-weight: 600;
 }
 
-/* ========== BOTÕES PIXELADOS ========== */
-.btn-confirmar, .btn-cancelar, .btn-extra, .btn-reset, .btn-adicionar {
-    padding: 12px 20px;
-    border: 3px solid;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.7rem;
+/* ========== BOTÕES ========== */
+.btn-extra, .btn-adicionar {
+    background: #d4b48c;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    padding: 12px 25px;
+    font-size: 0.9rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.1s ease;
-    box-shadow: 5px 5px 0 #1a2f3f;
-    image-rendering: pixelated;
+    box-shadow: 0 4px 0 #8b6b4d;
+    transition: all 0.2s;
+    border: 2px solid #b89a7a;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.btn-extra:hover, .btn-adicionar:hover {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #8b6b4d;
+    background: #c3a07e;
+}
+
+.btn-confirmar, .btn-cancelar {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 30px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 3px 0 #5e4b3a;
+    font-size: 0.9rem;
 }
 
 .btn-confirmar {
-    background: #2a5a3a;
-    border-color: #ffd700;
-    color: #ffd700;
+    background: #8fbc8f;
+    color: white;
 }
 
 .btn-cancelar {
-    background: #8b0000;
-    border-color: #ffd700;
-    color: #ffd700;
+    background: #cd5c5c;
+    color: white;
 }
 
-.btn-extra, .btn-adicionar {
-    background: #2a4a5a;
-    border-color: #ffd700;
-    color: #ffd700;
+.btn-confirmar:hover, .btn-cancelar:hover {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #5e4b3a;
+}
+
+/* ========== PLANEJAMENTO ========== */
+.dias-semana {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.dia-card {
+    background: #fff8e7;
+    color: #7b5e3b;
+    padding: 15px 5px;
+    border: 2px solid #d4b48c;
+    border-radius: 30px;
+    box-shadow: 0 4px 0 #b89a7a;
+    text-align: center;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.dia-card:hover {
+    background: #d4b48c;
+    color: white;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #b89a7a;
+}
+
+.tarefas-semana {
+    background: #fff8e7;
+    border: 3px solid #d4b48c;
+    border-radius: 40px;
+    padding: 25px;
+    box-shadow: 0 6px 0 #b89a7a;
+}
+
+.dia-tarefas {
+    background: #fff5e6;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 2px solid #e9d2a7;
+    border-radius: 30px;
+}
+
+.dia-tarefas h3 {
+    color: #8b6b4d;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.tarefa-item-planejamento {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    border: 2px solid #e9d2a7;
+    border-radius: 30px;
+    color: #4a3b2f;
+}
+
+/* ========== GRATIDÃO ========== */
+.gratidao-container {
+    max-width: 100%;
+    padding: 10px;
+    margin-bottom: 100px;
+}
+
+.gratidao-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.gratidao-header h1 {
+    background: #fff8e7;
+    display: inline-block;
+    padding: 15px 30px;
+    border: 3px solid #d4b48c;
+    border-radius: 60px;
+    box-shadow: 0 6px 0 #b89a7a;
+    color: #7b5e3b;
+    font-size: 1.2rem;
+}
+
+.gratidao-header p {
+    color: #a0522d;
+    margin-top: 10px;
+}
+
+.gratidao-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
     width: 100%;
 }
 
-.btn-reset {
-    background: #8b4513;
-    border-color: #ffd700;
-    color: #ffd700;
-}
-
-.btn-confirmar:hover, .btn-cancelar:hover, .btn-extra:hover, .btn-reset:hover, .btn-adicionar:hover {
-    transform: translateY(-3px);
-    box-shadow: 8px 8px 0 #1a2f3f;
-}
-
-/* ========== DIÁRIO, GRATIDÃO E IMPORTANTES ========== */
-.diario-container, .gratidao-container, .importantes-container {
-    max-width: 1200px;
-    margin: 0 auto 100px auto;
-    padding: 20px;
-}
-
-.diario-header, .gratidao-header, .importantes-header {
-    text-align: center;
-    margin-bottom: 40px;
-    color: #ffd700;
-    text-shadow: 4px 4px 0 #8b4513, 6px 6px 0 #1a2f3f;
-}
-
-.conquistas-grid, .gratidao-grid, .importantes-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
-}
-
-.conquista-card, .gratidao-card, .importante-card {
-    background: #2a4a5a;
-    border: 4px solid #ffd700;
-    border-radius: 0;
-    overflow: hidden;
-    box-shadow: 8px 8px 0 #1a2f3f;
-    transition: all 0.1s ease;
+.gratidao-card {
+    background: #fff8e7;
+    border: 3px solid #d4b48c;
+    border-radius: 30px;
+    box-shadow: 0 5px 0 #b89a7a;
+    padding: 0;
     position: relative;
+    overflow: hidden;
 }
 
-.conquista-card:hover, .gratidao-card:hover, .importante-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 12px 12px 0 #1a2f3f;
+.gratidao-card h3 {
+    color: #8b6b4d;
+    font-size: 1rem;
+    margin-bottom: 8px;
 }
 
-.conquista-data {
-    background: #8b4513;
-    color: #ffd700;
-    padding: 8px;
-    font-family: 'Press Start 2P', cursive;
-    font-size: 0.7rem;
-    border-bottom: 3px solid #ffd700;
+.gratidao-card p {
+    color: #5e4b3a;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
 }
 
-/* ========== AJUSTES RESPONSIVOS ========== */
+.gratidao-card small {
+    color: #b89a7a;
+    font-size: 0.8rem;
+}
+
+/* ========== SERUMANINHO (STATUS ESCUROS) ========== */
+#alter-ambiente, #alter-acao, #alter-humor, #alter-tarefas {
+    color: #4a3b2f;
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Ícones dos status */
+#alter-ambiente::before, #alter-acao::before, #alter-humor::before, #alter-tarefas::before {
+    color: #d4b48c;
+    margin-right: 5px;
+}
+
+/* ========== RESPONSIVIDADE ========== */
 @media only screen and (max-width: 600px) {
     body {
         font-size: 1rem;
     }
     
-    .nav-container {
-        flex-wrap: wrap;
-    }
-    
     .nav-brand {
-        font-size: 0.6rem;
-        padding: 8px 10px;
+        font-size: 0.8rem;
+        padding: 8px 15px;
     }
     
     .nav-link {
-        font-size: 0.5rem;
-        padding: 6px 8px;
+        font-size: 0.7rem;
+        padding: 6px 12px;
     }
     
     .colunas-tarefas {
         grid-template-columns: 1fr;
     }
     
+    .dias-semana {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .gratidao-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    h1 { font-size: 1.1rem; }
+    h2 { font-size: 0.9rem; }
+    h3 { font-size: 0.8rem; }
+    
+    .placar {
+        padding: 15px;
+    }
+    
     .jogador-icon {
-        width: 45px;
-        height: 45px;
+        width: 50px;
+        height: 50px;
         font-size: 2rem;
     }
     
     .pontos {
-        font-size: 1.2rem;
-    }
-    
-    .versus {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
 }
 
 @media only screen and (max-width: 400px) {
-    .nav-menu {
-        gap: 4px;
+    .nav-brand {
+        font-size: 0.7rem;
+        padding: 6px 12px;
     }
     
     .nav-link {
-        font-size: 0.45rem;
-        padding: 4px 6px;
+        font-size: 0.6rem;
+        padding: 5px 10px;
     }
     
     .container {
-        padding: 10px;
-        margin-bottom: 120px;
+        padding: 0 10px;
+        margin-bottom: 110px;
     }
+    
+    h1 { font-size: 1rem; }
 }

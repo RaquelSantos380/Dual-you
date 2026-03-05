@@ -2,15 +2,15 @@
 
 {% block content %}
 <div class="header-batalha">
-    <h1>⚔️ Suas Tarefas de Hoje - {{ dia }}</h1>
+    <h1>⚔️ SUAS TAREFAS - {{ dia }}</h1>
 </div>
 
-<!-- TAREFAS PRIMEIRO (prioridade) -->
+<!-- TAREFAS PRIMEIRO (PRIORIDADE) -->
 <div class="tarefas-container">
     <div class="colunas-tarefas">
-        <!-- Coluna do Humano (suas tarefas) -->
+        <!-- Coluna do Humano -->
         <div class="coluna humano-coluna">
-            <h3>👤 Suas Tarefas</h3>
+            <h3>👤 MINHAS TAREFAS</h3>
             <div class="tarefas-lista">
                 {% for tarefa in tarefas %}
                     <div class="tarefa-item {% if tarefa.concluida %}concluida{% endif %}">
@@ -22,31 +22,35 @@
                             </form>
                         {% endif %}
                         <span class="descricao">{{ tarefa.tarefa.descricao }}</span>
-                        <span class="pontos-tarefa">+15 pts</span>
+                        <span class="pontos-tarefa">+15</span>
                         {% if tarefa.tarefa.extra %}
-                            <span class="badge-extra">Extra</span>
+                            <span class="badge-extra">EXTRA</span>
                         {% endif %}
                     </div>
                 {% endfor %}
             </div>
             
-            <!-- Botão adicionar tarefa extra -->
-            <div class="tarefa-extra">
-                <button class="btn-extra" onclick="mostrarFormExtra()">+ Adicionar Tarefa Extra</button>
-                <div id="form-extra" class="form-extra" style="display: none;">
-                    <form action="{{ url_for('adicionar_tarefa_extra') }}" method="post">
-                        <input type="text" name="descricao" placeholder="Digite sua tarefa extra..." required>
-                        <button type="submit" class="btn-confirmar">Adicionar</button>
-                        <button type="button" class="btn-cancelar" onclick="esconderFormExtra()">Cancelar</button>
-                    </form>
-                </div>
+            <!-- BOTÃO ADICIONAR TAREFA EXTRA (MENOR) -->
+            <div style="text-align: center; margin-top: 15px;">
+                <button class="btn-extra" onclick="window.location.href='/planejamento'">➕ ADICIONAR TAREFA</button>
+            </div>
+            
+            <!-- Form extra (escondido) -->
+            <div id="form-extra" class="form-extra" style="display: none; margin-top: 15px;">
+                <form action="{{ url_for('adicionar_tarefa_extra') }}" method="post">
+                    <input type="text" name="descricao" placeholder="DIGITE A TAREFA..." required style="width: 100%; padding: 8px; background: #1a2f3f; border: 2px solid #ffd700; color: #ffd700; font-family: 'Press Start 2P', cursive; font-size: 0.5rem;">
+                    <div style="display: flex; gap: 5px; margin-top: 8px;">
+                        <button type="submit" class="btn-confirmar" style="flex: 1;">ADICIONAR</button>
+                        <button type="button" class="btn-cancelar" onclick="esconderFormExtra()" style="flex: 1;">CANCELAR</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-<!-- ALTER EGO - AGORA EMBAIXO DAS TAREFAS -->
-<div style="margin-top: 30px;">
+<!-- ALTER EGO -->
+<div style="margin-top: 20px;">
     {% include 'serumaninho_casa.html' %}
 </div>
 

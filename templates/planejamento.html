@@ -2,49 +2,51 @@
 
 {% block content %}
 <div class="header-planejamento">
-    <h1>📅 Planejamento Semanal</h1>
-    <p>Adicione tarefas fixas para cada dia da semana</p>
+    <h1>📅 PLANEJAMENTO</h1>
+    <p>ADICIONE TAREFAS PARA CADA DIA</p>
 </div>
 
 <!-- Dias da semana -->
 <div class="dias-semana">
     <div class="dia-card" onclick="mostrarFormDia('Segunda-feira')">
-        <h3>Segunda</h3>
+        <h3>SEG</h3>
     </div>
     <div class="dia-card" onclick="mostrarFormDia('Terça-feira')">
-        <h3>Terça</h3>
+        <h3>TER</h3>
     </div>
     <div class="dia-card" onclick="mostrarFormDia('Quarta-feira')">
-        <h3>Quarta</h3>
+        <h3>QUA</h3>
     </div>
     <div class="dia-card" onclick="mostrarFormDia('Quinta-feira')">
-        <h3>Quinta</h3>
+        <h3>QUI</h3>
     </div>
     <div class="dia-card" onclick="mostrarFormDia('Sexta-feira')">
-        <h3>Sexta</h3>
+        <h3>SEX</h3>
     </div>
     <div class="dia-card" onclick="mostrarFormDia('Sábado')">
-        <h3>Sábado</h3>
+        <h3>SÁB</h3>
     </div>
     <div class="dia-card" onclick="mostrarFormDia('Domingo')">
-        <h3>Domingo</h3>
+        <h3>DOM</h3>
     </div>
 </div>
 
 <!-- Formulário para adicionar tarefa -->
-<div id="form-tarefa-dia" class="form-tarefa-dia" style="display: none;">
-    <h3>Adicionar Tarefa para <span id="dia-selecionado"></span></h3>
+<div id="form-tarefa-dia" class="form-tarefa-dia" style="display: none; background: #2a4a5a; border: 3px solid #ffd700; padding: 20px; margin-bottom: 20px;">
+    <h3 style="color: #ffd700;">ADICIONAR PARA <span id="dia-selecionado"></span></h3>
     <form action="{{ url_for('adicionar_tarefa_fixa') }}" method="post">
         <input type="hidden" name="dia_semana" id="dia-input">
-        <input type="text" name="descricao" placeholder="Digite a tarefa..." required>
-        <button type="submit" class="btn-confirmar">Adicionar</button>
-        <button type="button" class="btn-cancelar" onclick="esconderFormDia()">Cancelar</button>
+        <input type="text" name="descricao" placeholder="DIGITE A TAREFA..." required style="width: 100%; padding: 10px; margin-bottom: 10px; background: #1a2f3f; border: 2px solid #ffd700; color: #ffffff; font-family: 'Press Start 2P', cursive; font-size: 0.7rem;">
+        <div style="display: flex; gap: 10px;">
+            <button type="submit" class="btn-confirmar">ADICIONAR</button>
+            <button type="button" class="btn-cancelar" onclick="esconderFormDia()">CANCELAR</button>
+        </div>
     </form>
 </div>
 
 <!-- Lista de tarefas da semana -->
 <div class="tarefas-semana">
-    <h2>Tarefas Fixas por Dia</h2>
+    <h2 style="color: #ffffff; margin-bottom: 20px;">TAREFAS DA SEMANA</h2>
     
     {% set dias = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', 'Domingo'] %}
     
@@ -53,57 +55,57 @@
             <h3>{{ dia }}</h3>
             <div class="tarefas-lista">
                 {% for tarefa in tarefas_por_dia[dia] %}
-                    <div class="tarefa-item-planejamento" style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="tarefa-item-planejamento">
                         <span>{{ tarefa.descricao }}</span>
-                        <form action="{{ url_for('remover_tarefa', tarefa_id=tarefa.id) }}" method="post" style="margin-left: 10px;" onsubmit="return confirm('Remover esta tarefa?')">
-                            <button type="submit" class="btn-remover" style="background: #e74c3c; color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer;">🗑️</button>
+                        <form action="{{ url_for('remover_tarefa', tarefa_id=tarefa.id) }}" method="post" style="display: inline;" onsubmit="return confirm('REMOVER?')">
+                            <button type="submit" style="background: none; border: none; color: #ffd700; font-size: 1.2rem; cursor: pointer;">🗑️</button>
                         </form>
                     </div>
                 {% else %}
-                    <p class="sem-tarefas">Nenhuma tarefa fixa</p>
+                    <p class="sem-tarefas" style="color: #8b4513;">NENHUMA TAREFA</p>
                 {% endfor %}
             </div>
         </div>
     {% endfor %}
     
     <!-- Tarefas Extras -->
-    <div class="dia-tarefas" style="margin-top: 30px; background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);">
-        <h3>✨ Tarefas Extras (aparecem todos os dias)</h3>
+    <div class="dia-tarefas" style="margin-top: 20px;">
+        <h3>✨ TAREFAS EXTRAS</h3>
         <div class="tarefas-lista">
             {% for tarefa in tarefas_extra %}
-                <div class="tarefa-item-planejamento" style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="tarefa-item-planejamento">
                     <span>{{ tarefa.descricao }}</span>
-                    <span class="badge-extra">Extra</span>
-                    <form action="{{ url_for('remover_tarefa', tarefa_id=tarefa.id) }}" method="post" style="margin-left: 10px;" onsubmit="return confirm('Remover esta tarefa extra?')">
-                        <button type="submit" class="btn-remover" style="background: #e74c3c; color: white; border: none; border-radius: 5px; padding: 5px 10px; cursor: pointer;">🗑️</button>
+                    <span class="badge-extra">EXTRA</span>
+                    <form action="{{ url_for('remover_tarefa', tarefa_id=tarefa.id) }}" method="post" style="display: inline;" onsubmit="return confirm('REMOVER?')">
+                        <button type="submit" style="background: none; border: none; color: #ffd700; font-size: 1.2rem; cursor: pointer;">🗑️</button>
                     </form>
                 </div>
             {% else %}
-                <p class="sem-tarefas">Nenhuma tarefa extra</p>
+                <p class="sem-tarefas" style="color: #8b4513;">NENHUMA TAREFA EXTRA</p>
             {% endfor %}
         </div>
         
         <!-- Botão adicionar tarefa extra -->
-        <div class="tarefa-extra">
-            <button class="btn-extra" onclick="mostrarFormExtra()">+ Adicionar Tarefa Extra</button>
-            
-            <div id="form-extra" class="form-extra" style="display: none;">
-                <form action="{{ url_for('adicionar_tarefa_extra') }}" method="post">
-                    <input type="text" name="descricao" placeholder="Digite sua tarefa extra..." required>
-                    <button type="submit" class="btn-confirmar">Adicionar</button>
-                    <button type="button" class="btn-cancelar" onclick="esconderFormExtra()">Cancelar</button>
-                </form>
-            </div>
+        <div style="text-align: center; margin-top: 15px;">
+            <button class="btn-extra" onclick="mostrarFormExtra()">➕ ADICIONAR EXTRA</button>
+        </div>
+        
+        <div id="form-extra" class="form-extra" style="display: none; margin-top: 15px;">
+            <form action="{{ url_for('adicionar_tarefa_extra') }}" method="post">
+                <input type="text" name="descricao" placeholder="DIGITE A TAREFA EXTRA..." required style="width: 100%; padding: 10px; margin-bottom: 10px; background: #1a2f3f; border: 2px solid #ffd700; color: #ffffff; font-family: 'Press Start 2P', cursive; font-size: 0.7rem;">
+                <div style="display: flex; gap: 10px;">
+                    <button type="submit" class="btn-confirmar">ADICIONAR</button>
+                    <button type="button" class="btn-cancelar" onclick="esconderFormExtra()">CANCELAR</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <!-- Botão reset -->
-<div class="acoes">
-    <form action="{{ url_for('resetar_tarefas') }}" method="post" class="form-reset">
-        <button type="submit" class="btn-reset" onclick="return confirm('Tem certeza? Isso vai apagar TODAS as tarefas!')">
-            🔄 Resetar Tudo
-        </button>
+<div style="text-align: center; margin-top: 20px;">
+    <form action="{{ url_for('resetar_tarefas') }}" method="post" onsubmit="return confirm('RESETAR TUDO?')">
+        <button type="submit" class="btn-cancelar" style="background: #8b0000;">🔄 RESETAR</button>
     </form>
 </div>
 
@@ -126,5 +128,4 @@ function esconderFormExtra() {
     document.getElementById('form-extra').style.display = 'none';
 }
 </script>
-
-{% endblock %}  <!-- ⚠️ IMPORTANTE: Este endblock fecha o content -->
+{% endblock %}

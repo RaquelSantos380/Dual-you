@@ -2,96 +2,41 @@
 
 {% block content %}
 <div class="gratidao-container">
-    <div class="gratidao-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
-        <div>
-            <h1>🙏 Mural da Gratidão</h1>
-            <p>Pequenos momentos, grandes motivos para agradecer</p>
-        </div>
-        
-        <div style="display: flex; gap: 10px;">
-            <!-- BOTÃO ADICIONAR - VERDE COM TEXTO BRANCO -->
-            <a href="/adicionar_momento?tipo=gratidao" class="btn-adicionar" style="background: #5ad88f; color: white; border: none; border-radius: 30px; padding: 12px 20px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);">
-                ➕ Adicionar
-            </a>
-            
-            <!-- BOTÃO APAGAR TUDO - VERMELHO COM TEXTO BRANCO -->
-            <form action="{{ url_for('deletar_todos_momentos', tipo='gratidao') }}" method="post" onsubmit="return confirm('⚠️ TEM CERTEZA? Isso vai apagar TODOS os seus momentos de gratidão!')">
-                <button type="submit" style="background: #e97c70; color: white; border: none; border-radius: 30px; padding: 12px 20px; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 8px; font-weight: bold; box-shadow: 0 4px 10px rgba(231, 76, 60, 0.3);">
-                    🗑️ Apagar tudo
-                </button>
-            </form>
-        </div>
+    <div class="gratidao-header">
+        <h1>🙏 GRATIDÃO</h1>
+        <p>PEQUENOS MOMENTOS, GRANDES MOTIVOS</p>
+    </div>
+    
+    <div style="text-align: center; margin-bottom: 20px;">
+        <a href="/adicionar_momento?tipo=gratidao" class="btn-adicionar">➕ ADICIONAR</a>
+        <form action="{{ url_for('deletar_todos_momentos', tipo='gratidao') }}" method="post" style="display: inline;" onsubmit="return confirm('APAGAR TUDO?')">
+            <button type="submit" class="btn-adicionar" style="background: #8b0000;">🗑️ APAGAR</button>
+        </form>
     </div>
     
     <div class="gratidao-grid">
         {% for momento in momentos %}
-        <div class="gratidao-card" style="position: relative; background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-            <!-- LIXEIRINHA INDIVIDUAL -->
-            <form action="{{ url_for('deletar_momento', momento_id=momento.id) }}" method="post" style="position: absolute; top: 10px; right: 10px; z-index: 10;" onsubmit="return confirm('Remover este momento?')">
-                <button type="submit" style="background: rgba(231, 76, 60, 0.9); color: white; border: none; border-radius: 50%; width: 36px; height: 36px; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(5px); box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-                    🗑️
-                </button>
+        <div class="gratidao-card">
+            <form action="{{ url_for('deletar_momento', momento_id=momento.id) }}" method="post" style="position: absolute; top: 5px; right: 5px; z-index: 10;" onsubmit="return confirm('REMOVER?')">
+                <button type="submit" style="background: #8b0000; color: white; border: 2px solid #ffd700; width: 35px; height: 35px; cursor: pointer; font-size: 1rem;">🗑️</button>
             </form>
             
             {% if momento.foto %}
-            <div class="gratidao-foto" style="width: 100%; height: 200px; overflow: hidden;">
-                <img src="{{ url_for('static', filename=momento.foto) }}" alt="{{ momento.titulo }}" style="width: 100%; height: 100%; object-fit: cover;">
-            </div>
+            <img src="{{ url_for('static', filename=momento.foto) }}" style="width: 100%; height: 150px; object-fit: cover; border-bottom: 2px solid #ffd700;">
             {% endif %}
             
-            <div class="gratidao-conteudo" style="padding: 20px;">
-                <h3 style="color: #333; margin-bottom: 10px; font-size: 1.3rem;">{{ momento.titulo }}</h3>
-                <div style="font-size: 0.85rem; color: #999; margin-bottom: 15px; font-style: italic;">{{ momento.data.strftime('%d/%m/%Y') }}</div>
-                <p style="color: #555; line-height: 1.6;">{{ momento.descricao }}</p>
+            <div style="padding: 15px;">
+                <h3>{{ momento.titulo }}</h3>
+                <p>{{ momento.descricao }}</p>
+                <small>{{ momento.data.strftime('%d/%m/%Y') }}</small>
             </div>
         </div>
         {% else %}
-        <div class="gratidao-empty" style="grid-column: 1 / -1; text-align: center; padding: 60px 20px; background: rgba(252, 255, 217, 0.9); border-radius: 20px;">
-            <div style="font-size: 4rem; margin-bottom: 20px; opacity: 0.7;">🙏</div>
-            <h3 style="color: #333; margin-bottom: 10px;">Nenhum momento registrado ainda</h3>
-            <p style="color: #666; margin-bottom: 30px;">Comece a registrar coisas pelas quais você é grato!</p>
-            <!-- BOTÃO ADICIONAR PRIMEIRO MOMENTO - VERDE COM TEXTO BRANCO -->
-            <a href="/adicionar_momento?tipo=gratidao" style="background: #71e4a1; color: white; border: none; border-radius: 30px; padding: 15px 30px; font-size: 1.1rem; cursor: pointer; display: inline-block; text-decoration: none; font-weight: bold; box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);">
-                ➕ Adicionar primeiro momento
-            </a>
+        <div style="grid-column: 1/-1; text-align: center; padding: 40px; background: #2a4a5a; border: 3px solid #ffd700;">
+            <p style="color: #ffffff; margin-bottom: 20px;">NENHUM MOMENTO AINDA</p>
+            <a href="/adicionar_momento?tipo=gratidao" class="btn-adicionar">➕ ADICIONAR PRIMEIRO</a>
         </div>
         {% endfor %}
     </div>
 </div>
-
-<style>
-.gratidao-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.gratidao-header {
-    text-align: center;
-    margin-bottom: 40px;
-    color: white;
-}
-
-.gratidao-header h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-}
-
-.gratidao-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 25px;
-    margin-top: 30px;
-}
-
-.gratidao-card {
-    transition: all 0.3s;
-}
-
-.gratidao-card:hover {
-    transform: translateY(-5px) rotate(1deg);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-}
-</style>
 {% endblock %}

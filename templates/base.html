@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
     <!-- PWA Manifest -->
     <link rel="manifest" href="/static/manifest.json">
@@ -15,9 +15,9 @@
     
     <!-- Meta tags para Android -->
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="theme-color" content="#1a2f3f">
+    <meta name="theme-color" content="#667eea">
     
-    <title>Dual You - Uma Jornada Pixelada</title>
+    <title>Dual You - Sua Jornada Diária</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
@@ -26,7 +26,7 @@
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 {% for category, message in messages %}
-                    <div style="background: #2a5a3a; color: #ffd700; padding: 10px; border: 3px solid #ffd700; margin-bottom: 20px; text-align: center; font-family: 'Press Start 2P', cursive; font-size: 0.7rem; box-shadow: 5px 5px 0 #1a2f3f;">
+                    <div style="background: #2a5a3a; color: #ffd700; padding: 8px; border: 2px solid #ffd700; margin-bottom: 10px; text-align: center; font-family: 'Press Start 2P', cursive; font-size: 0.5rem; box-shadow: 3px 3px 0 #1a2f3f;">
                         {{ message }}
                     </div>
                 {% endfor %}
@@ -36,7 +36,7 @@
         {% block content %}{% endblock %}
     </main>
     
-    <!-- NAVBAR AGORA EMBAIXO (PIXELADA) -->
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="nav-container">
             <a href="/" class="nav-brand">⚔️ DUAL YOU</a>
